@@ -49,14 +49,21 @@
             width: 100%; text-transform: uppercase; font-weight: bold; cursor: pointer; font-size: 0.75rem;
         }
 
-        /* FILTROS CENTRALIZADOS */
-        .filters { 
-            display: flex; 
-            justify-content: center; /* Centraliza os botões */
-            gap: 8px; 
-            margin-bottom: 25px; 
-            padding: 0 10px;
+        /* RESUMO DE INVENTÁRIO */
+        .inventory-summary {
+            background: #f9f9f9;
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
         }
+        .summary-item { display: flex; flex-direction: column; gap: 2px; }
+        .summary-label { font-size: 0.55rem; text-transform: uppercase; color: #999; font-weight: bold; }
+        .summary-count { font-size: 1rem; font-weight: 900; color: var(--brand-black); }
+
+        .filters { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
         .filter-btn {
             background: var(--brand-gray); border: none; padding: 6px 12px;
             font-size: 0.65rem; border-radius: 20px; white-space: nowrap; cursor: pointer;
@@ -64,52 +71,26 @@
         }
         .filter-btn.active { background: #000; color: #fff; }
 
-        /* LISTA EM CARDS (MOBILE & TABLET) */
-        .card-item {
-            background: #fff; border: 1px solid var(--border-color);
-            margin-bottom: 12px; padding: 16px;
-        }
-        .card-row {
-            display: flex; justify-content: space-between; align-items: baseline;
-            padding: 4px 0; border-bottom: 1px solid #f9f9f9;
-        }
+        .card-item { background: #fff; border: 1px solid var(--border-color); margin-bottom: 12px; padding: 16px; }
+        .card-row { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 0; border-bottom: 1px solid #f9f9f9; }
         .card-row:last-of-type { border-bottom: none; margin-bottom: 10px; }
-
-        /* Ajuste de Fontes nos Cards */
-        .card-label { 
-            font-size: 0.65rem; /* Esquerda menor e sutil */
-            font-weight: bold; 
-            text-transform: uppercase; 
-            color: #999; 
-        }
-        .card-value { 
-            font-size: 0.8rem; /* Direita um pouco maior que o label, mas equilibrada */
-            font-weight: 500; 
-            text-align: right;
-            max-width: 60%;
-        }
+        .card-label { font-size: 0.65rem; font-weight: bold; text-transform: uppercase; color: #999; }
+        .card-value { font-size: 0.8rem; font-weight: 500; text-align: right; max-width: 60%; }
 
         .badge { font-size: 0.6rem; padding: 3px 8px; font-weight: bold; text-transform: uppercase; }
         .b-fora { background: var(--accent-red); color: #991b1b; }
         .b-retorno { background: var(--accent-green); color: #155724; }
 
-        .btn-action { 
-            border: 1px solid #000; background: none; padding: 10px; 
-            width: 100%; font-size: 0.7rem; font-weight: bold; 
-            cursor: pointer; text-transform: uppercase;
-        }
+        .btn-action { border: 1px solid #000; background: none; padding: 10px; width: 100%; font-size: 0.7rem; font-weight: bold; cursor: pointer; text-transform: uppercase; }
         
         .section { display: none; }
         .section.active { display: block; }
-
-        .team-item { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid var(--brand-gray); font-size: 0.8rem; }
-        .btn-del { color: red; background: none; border: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <header><h1>Zerezes - Rio Sul</h1></header>
+    <header><h1>Zerezes</h1></header>
 
     <nav>
         <div class="nav-link active" onclick="switchTab('tab-registro', this)">Registros</div>
@@ -119,11 +100,11 @@
     <div id="tab-registro" class="section active">
         <div class="form-card">
             <div class="form-group"><label>Responsável</label><select id="f-resp"></select></div>
-            <div class="form-group"><label>Modelo / Cor</label><input type="text" id="f-modelo" placeholder="Ex: LUC CHAMPAGNE"></div>
+            <div class="form-group"><label>Modelo / Cor</label><input type="text" id="f-modelo" placeholder="Ex: GATTO"></div>
             <div class="form-group">
                 <label>Motivo</label>
                 <select id="f-motivo" onchange="checkMotivo()">
-                    <option value="REPOSIÇÃO DE LENTES">REPOSIÇÃO DE LENTES</option>
+                    <option value="REPOSIÇÃO LENTES">REPOSIÇÃO LENTES</option>
                     <option value="EMPRÉSTIMO CLIENTE">EMPRÉSTIMO CLIENTE</option>
                     <option value="OUTROS">OUTROS</option>
                 </select>
@@ -131,13 +112,25 @@
             <div id="c-pedido" class="conditional"><label>Nº do Pedido</label><input type="text" id="f-pedido"></div>
             <div id="c-outros" class="conditional"><label>Especifique</label><input type="text" id="f-outros"></div>
             <div class="form-group">
-                <label>Status</label>
+                <label>Status Inicial</label>
                 <select id="f-status">
                     <option value="FORA (SOLAR)">FORA (SOLAR)</option>
                     <option value="FORA (GRAU)">FORA (GRAU)</option>
                 </select>
             </div>
             <button class="btn-black" onclick="salvar()">Registrar Saída</button>
+        </div>
+
+        <div class="inventory-summary">
+            <div class="summary-item">
+                <span class="summary-label">Grau Externo</span>
+                <span id="count-grau" class="summary-count">0</span>
+            </div>
+            <div style="border-left: 1px solid #ddd;"></div>
+            <div class="summary-item">
+                <span class="summary-label">Solar Externo</span>
+                <span id="count-solar" class="summary-count">0</span>
+            </div>
         </div>
 
         <div class="filters">
@@ -154,13 +147,13 @@
             <label>Novo Integrante</label>
             <div style="display:flex; gap:10px;"><input type="text" id="new-name"><button class="btn-black" style="width:60px; margin:0;" onclick="addEquipe()">ADD</button></div>
         </div>
-        <div id="equipe-lista"></div>
+        <div id="equipe-lista" style="padding: 10px;"></div>
     </div>
 </div>
 
 <script>
     let db = [];
-    let equipe = ["EMINEM", "LUCAS", "2PAC"];
+    let equipe = ["ANA", "CARLOS", "JULIA"];
 
     function switchTab(id, el) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -175,20 +168,11 @@
         document.getElementById('c-outros').style.display = v === 'OUTROS' ? 'block' : 'none';
     }
 
-    function addEquipe() {
-        const n = document.getElementById('new-name').value.toUpperCase();
-        if(n) { equipe.push(n); document.getElementById('new-name').value=''; updateEquipeUI(); }
-    }
-
-    function updateEquipeUI() {
-        const sel = document.getElementById('f-resp');
-        const list = document.getElementById('equipe-lista');
-        sel.innerHTML = '<option value="">Selecione...</option>';
-        list.innerHTML = '';
-        equipe.forEach((m, i) => {
-            sel.innerHTML += `<option value="${m}">${m}</option>`;
-            list.innerHTML += `<div class="team-item">${m} <button class="btn-del" onclick="equipe.splice(${i},1);updateEquipeUI()">✕</button></div>`;
-        });
+    function updateCounts() {
+        const foraGrau = db.filter(i => i.st === 'FORA (GRAU)').length;
+        const foraSolar = db.filter(i => i.st === 'FORA (SOLAR)').length;
+        document.getElementById('count-grau').innerText = foraGrau;
+        document.getElementById('count-solar').innerText = foraSolar;
     }
 
     function salvar() {
@@ -230,11 +214,19 @@
                     <button class="btn-action" onclick="toggleStatus(${i})">${isFora?'Dar Baixa':'Desfazer Baixa'}</button>
                 </div>`;
         });
+        updateCounts(); // Atualiza os números na barra
     }
 
     function toggleStatus(i) {
         db[i].st = db[i].st.includes("FORA") ? "RETORNOU" : db[i].stOrig;
         render('TUDO');
+    }
+
+    // Funções de equipe simplificadas para este exemplo
+    function updateEquipeUI() {
+        const sel = document.getElementById('f-resp');
+        sel.innerHTML = '<option value="">Selecione...</option>';
+        equipe.forEach(m => sel.innerHTML += `<option value="${m}">${m}</option>`);
     }
 
     updateEquipeUI();
