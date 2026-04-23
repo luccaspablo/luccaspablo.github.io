@@ -1,415 +1,283 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Controle de Materiais</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zerezes - Gestão de Externos v4.1</title>
+    <style>
+        :root {
+            --brand-black: #000000;
+            --brand-gray: #f2f2f2;
+            --accent-green: #d4edda;
+            --accent-text-green: #155724;
+            --border-color: #e0e0e0;
+            --text-main: #222;
+        }
 
-<style>
-body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f2f2f7; }
-.container { padding: 20px; max-width: 500px; margin: auto; }
-h1 { font-size: 22px; }
+        * { box-sizing: border-box; }
 
-.card {
-  background: white; padding: 15px; border-radius: 16px;
-  margin-bottom: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  transition: 0.2s;
-}
-.card:active { transform: scale(0.98); }
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #ffffff;
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            letter-spacing: 0.5px;
+        }
 
-.header-user {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #fff;
-  padding: 12px 15px;
-  border-radius: 14px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-.header-user h1 { font-size: 20px; margin: 0; }
+        .container { 
+            max-width: 100%; /* Permite que a tabela ocupe toda a largura da tela */
+            margin: 0 auto; 
+            overflow-x: auto; /* Adiciona barra de rolagem horizontal se necessário */
+        }
 
-.btn-trocar {
-  background: #e5e5ea;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: bold;
-  color: #007aff;
-  cursor: pointer;
-}
+        header {
+            border-bottom: 2px solid var(--brand-black);
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+        }
 
-.funcionario { text-align: center; font-weight: 600; cursor: pointer; }
-.item { display: flex; justify-content: space-between; align-items: center; }
-.controle { display: flex; align-items: center; gap: 10px; }
+        header h1 { text-transform: uppercase; font-weight: 900; font-size: 1.5rem; margin: 0; }
 
-.btn {
-  width: 35px; height: 35px; border-radius: 50%;
-  border: none; font-size: 20px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-}
+        /* FORMULÁRIO */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            background: var(--brand-gray);
+            padding: 20px;
+            border-radius: 4px;
+            width: 100%;
+        }
 
-.menos { background: #e5e5ea; }
-.mais { background: #007aff; color: white; }
+        .conditional-field {
+            display: none;
+            background: #e9e9e9;
+            padding: 10px;
+            border-left: 3px solid var(--brand-black);
+            grid-column: 1 / -1;
+        }
 
-.qtd { font-weight: bold; width: 25px; text-align: center; font-size: 18px; }
-.ativo { border: 2px solid #34c759; }
+        label { font-size: 0.7rem; text-transform: uppercase; font-weight: bold; display: block; margin-bottom: 5px; }
 
-.botao {
-  width: 100%; padding: 14px; border-radius: 12px;
-  border: none; font-size: 16px; margin-top: 10px;
-  cursor: pointer; font-weight: 600;
-}
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 0;
+            background: white;
+            font-size: 0.9rem;
+        }
 
-.primary { background: #007aff; color: white; }
-.secondary { background: #e5e5ea; }
-.danger { background: #ff3b30; color: white; }
+        .btn-main {
+            background: var(--brand-black);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 0.8rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 5px;
+        }
 
-.status { font-size: 12px; font-weight: bold; margin-top: 5px; }
-.pendente { color: #ff9500; }
-.concluido { color: #34c759; }
+        /* TABELA E FILTROS */
+        .filters { display: flex; gap: 10px; margin: 40px 0 15px 0; }
+        
+        .filter-btn {
+            background: var(--brand-gray);
+            border: none;
+            padding: 8px 15px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+        .filter-btn.active { background: var(--brand-black); color: white; }
 
-.hidden { display: none; }
+        .table-wrapper { width: 100%; }
 
-.toast {
-  position: fixed; top: 20px; left: 50%;
-  transform: translateX(-50%);
-  background: #34c759; color: white;
-  padding: 12px 20px; border-radius: 20px;
-  font-size: 14px; opacity: 0; transition: 0.3s;
-  z-index: 999;
-}
-.toast.show { opacity: 1; }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            table-layout: auto; /* Permite que a tabela se adapte ao conteúdo */
+        }
 
-.filtros {
-  display: flex;
-  gap: 5px;
-  margin-bottom: 10px;
-}
+        th { text-align: left; font-size: 0.7rem; text-transform: uppercase; padding: 15px 10px; border-bottom: 1px solid var(--brand-black); white-space: nowrap; /* Impede que o texto do cabeçalho quebre */ }
+        td { padding: 15px 10px; border-bottom: 1px solid var(--brand-gray); font-size: 0.85rem; word-wrap: break-word; /* Quebra o texto se necessário */ }
 
-.filtro-btn {
-  flex: 1;
-  padding: 8px;
-  border-radius: 8px;
-  border: none;
-  background: #e5e5ea;
-  cursor: pointer;
-  font-size: 12px;
-}
+        .badge { font-size: 0.65rem; padding: 4px 8px; text-transform: uppercase; font-weight: bold; }
+        .b-fora { background: #fee2e2; color: #991b1b; }
+        .b-retorno { background: var(--accent-green); color: var(--accent-text-green); }
 
-.filtro-btn.active {
-  background: #007aff;
-  color: white;
-}
-
-.btn-delete {
-  color: #ff3b30;
-  font-size: 12px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  margin-top: 5px;
-}
-</style>
+        .btn-action {
+            border: 1px solid var(--brand-black);
+            background: none;
+            font-size: 0.7rem;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+        .btn-undo { border-color: #999; color: #999; }
+    </style>
 </head>
-
 <body>
 
-<div class="toast" id="toast"></div>
+<div class="container">
+    <header><h1>Zerezes <span style="font-weight:300; font-size:0.9rem;">| Gestão de Externos</span></h1></header>
 
-<!-- TELA INICIAL -->
-<div class="container" id="tela1">
-  <h1>📦 Controle de Saída ZRZS Rio Sul</h1>
-  <button class="botao secondary" onclick="abrirHistorico()">📊 Verificar histórico</button>
-  <div id="listaEquipe"></div>
-</div>
+    <div class="form-grid">
+        <div>
+            <label>Responsável</label>
+            <select id="select-func">
+                <option value="">Selecione...</option>
+                <option value="ANA">ANA</option>
+                <option value="CARLOS">CARLOS</option>
+                <option value="JULIA">JULIA</option>
+            </select>
+        </div>
+        <div>
+            <label>Modelo / Cor</label>
+            <input type="text" id="input-modelo" placeholder="Ex: GATTO - TARTARUGA">
+        </div>
+        <div>
+            <label>Motivo</label>
+            <select id="select-motivo" onchange="toggleFields()">
+                <option value="REPOSIÇÃO LENTES">REPOSIÇÃO LENTES</option>
+                <option value="EMPRÉSTIMO CLIENTE">EMPRÉSTIMO CLIENTE</option>
+                <option value="OUTROS">OUTROS</option>
+            </select>
+        </div>
+        
+        <div id="field-pedido" class="conditional-field">
+            <label>Nº do Pedido (Obrigatório)</label>
+            <input type="text" id="input-pedido" placeholder="Digite o número do pedido">
+        </div>
 
-<!-- TELA ITENS -->
-<div class="container" id="tela2" style="display:none;">
-  <div class="header-user">
-    <span id="textoUsuario"></span>
-    <button class="btn-trocar" onclick="voltarInicio()">← Voltar</button>
-  </div>
+        <div id="field-outros" class="conditional-field">
+            <label>Especifique o Motivo (Obrigatório)</label>
+            <input type="text" id="input-outros" placeholder="Descreva o motivo da saída">
+        </div>
 
-  <h1>Itens</h1>
-  <h3>Cases</h3><div id="cases"></div>
-  <h3>Flanelas</h3><div id="flanelas"></div>
-  <h3>Ecobags</h3><div id="ecobags"></div>
+        <div>
+            <label>Status</label>
+            <select id="select-status">
+                <option value="FORA (SOLAR)">FORA (SOLAR)</option>
+                <option value="FORA (GRAU)">FORA (GRAU)</option>
+            </select>
+        </div>
+        <div>
+            <label>&nbsp;</label> <button class="btn-main" onclick="registrar()">Registrar</button>
+        </div>
+    </div>
 
-  <button class="botao primary" onclick="goResumo()">Finalizar Retirada</button>
-  <button class="botao secondary" onclick="limparTudo()">Limpar Tudo</button>
-</div>
+    <div class="filters">
+        <button class="filter-btn active" onclick="filterTable('TUDO')">TUDO</button>
+        <button class="filter-btn" onclick="filterTable('FORA')">FORA</button>
+        <button class="filter-btn" onclick="filterTable('RETORNOU')">RETORNOU</button>
+    </div>
 
-<!-- RESUMO -->
-<div class="container" id="tela3" style="display:none;">
-  <h1>Resumo</h1>
-  <div id="resumo" class="card"></div>
-  <button class="botao primary" onclick="save()">Confirmar e Salvar</button>
-  <button class="botao secondary" onclick="back()">Voltar</button>
-</div>
-
-<!-- HISTÓRICO -->
-<div class="container" id="tela4" style="display:none;">
-
-  <div class="header-user">
-    <h1>Histórico</h1>
-    <button class="btn-trocar" onclick="abrirRelatorio()">📊 Relatório</button>
-  </div>
-
-  <div id="listaHistorico"></div>
-
-  <button class="botao secondary" onclick="voltarInicio()">Voltar</button>
-</div>
-
-<!-- RELATÓRIO -->
-<div class="container" id="tela5" style="display:none;">
-  <h1>Relatório</h1>
-
-  <div class="filtros">
-    <button class="filtro-btn active" onclick="setFiltro('hoje', this)">Hoje</button>
-    <button class="filtro-btn" onclick="setFiltro('7', this)">7d</button>
-    <button class="filtro-btn" onclick="setFiltro('30', this)">30d</button>
-    <button class="filtro-btn" onclick="setFiltro('all', this)">Todos</button>
-  </div>
-
-  <div id="relatorio"></div>
-
-  <button class="botao secondary" onclick="voltarHistorico()">Voltar</button>
+    <div class="table-wrapper">
+        <table id="main-table">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Responsável</th>
+                    <th>Modelo</th>
+                    <th>Motivo</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+        </table>
+    </div>
 </div>
 
 <script>
-let user = "";
-let data = {};
-let filtroAtual = "hoje";
+    let registros = [];
 
-const equipe = {
-  "Assistentes": ['Andressa', 'Gabriela', 'Isa'],
-  "Consultores": ['Ana', 'André', 'Caio', 'Daniele', 'Josi', 'Lucas', 'Matheus', 'Nathalia'],
-  "Gerente": ['Suzana']
-};
-
-const items = {
-  "Cases": ["Case Archt", "Case Cuore P", "Case Cuore G", "Case Stahl"],
-  "Flanelas": ["Flanela Cuore Grau", "Flanela Cuore Solar", "Flanela Verão", "Flanela Archt"],
-  "Ecobags": ["Ecobag Verão", "Ecobag Amarela", "Ecobag Cinza"]
-};
-
-function safeId(item){ return item.replace(/\s/g,''); }
-
-function showToast(msg,color="#34c759"){
-  const t=document.getElementById("toast");
-  t.style.background=color;
-  t.innerText=msg;
-  t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),2000);
-}
-
-function init(){
-  for(let cargo in equipe){
-    let html=`<h3>${cargo}</h3>`;
-    equipe[cargo].forEach(n=>{
-      html+=`<div class="card funcionario" onclick="selectUser('${n}')">${n}</div>`;
-    });
-    listaEquipe.innerHTML+=html;
-  }
-}
-
-function selectUser(n){
-  user=n; data={};
-  tela1.style.display="none";
-  tela2.style.display="block";
-  textoUsuario.innerText="Olá, "+user+" ::)";
-  renderItems();
-}
-
-function voltarInicio(){
-  user=""; data={};
-  tela2.style.display="none";
-  tela3.style.display="none";
-  tela4.style.display="none";
-  tela5.style.display="none";
-  tela1.style.display="block";
-}
-
-function renderItems(){
-  for(let cat in items){
-    let container=document.getElementById(cat.toLowerCase());
-    container.innerHTML="";
-    items[cat].forEach(item=>{
-      if(!data[item]) data[item]=0;
-      let id=safeId(item);
-
-      container.innerHTML+=`
-      <div class="card item ${data[item]>0?'ativo':''}">
-        <span>${item}</span>
-        <div class="controle">
-          <button class="btn menos" onclick="change('${item}',-1)">−</button>
-          <div class="qtd" id="val-${id}">${data[item]}</div>
-          <button class="btn mais" onclick="change('${item}',1)">+</button>
-        </div>
-      </div>`;
-    });
-  }
-}
-
-function change(item,val){
-  let id=safeId(item);
-  if(data[item]+val>=0){
-    data[item]+=val;
-    document.getElementById("val-"+id).innerText=data[item];
-    let card=document.getElementById("val-"+id).closest(".card");
-    data[item]>0?card.classList.add("ativo"):card.classList.remove("ativo");
-  }
-}
-
-function limparTudo(){
-  for(let k in data) data[k]=0;
-  renderItems();
-}
-
-function goResumo(){
-  if(!Object.values(data).some(v=>v>0)){
-    showToast("Selecione ao menos um item","#ff3b30");
-    return;
-  }
-  tela2.style.display="none";
-  tela3.style.display="block";
-
-  let html=`<p><b>${user}</b></p><hr>`;
-  for(let i in data) if(data[i]>0) html+=`<p>${i}: ${data[i]}</p>`;
-  resumo.innerHTML=html;
-}
-
-function save(){
-  let r=JSON.parse(localStorage.getItem("registros"))||[];
-  r.unshift({user,data:{...data},date:new Date().toISOString(),status:"pendente"});
-  localStorage.setItem("registros",JSON.stringify(r));
-  showToast("Salvo!");
-  setTimeout(()=>voltarInicio(),800);
-}
-
-function abrirHistorico(){
-  tela1.style.display="none";
-  tela4.style.display="block";
-  renderHistorico();
-}
-
-function renderHistorico(){
-  let registros = JSON.parse(localStorage.getItem("registros")) || [];
-  listaHistorico.innerHTML = "";
-
-  if (registros.length === 0) {
-    listaHistorico.innerHTML = "<p>Nenhum registro.</p>";
-    return;
-  }
-
-  registros.forEach((reg, i) => {
-    let itens = "";
-    for (let k in reg.data) {
-      if (reg.data[k] > 0) itens += `<li>${k}: ${reg.data[k]}</li>`;
+    function toggleFields() {
+        const motivo = document.getElementById('select-motivo').value;
+        document.getElementById('field-pedido').style.display = (motivo === 'EMPRÉSTIMO CLIENTE') ? 'block' : 'none';
+        document.getElementById('field-outros').style.display = (motivo === 'OUTROS') ? 'block' : 'none';
     }
 
-    listaHistorico.innerHTML += `
-      <div class="card">
-        <div onclick="document.getElementById('d${i}').classList.toggle('hidden')" style="cursor:pointer">
-          <b>${reg.user}</b>
-          <div class="status ${reg.status === 'concluido' ? 'concluido' : 'pendente'}">
-            ${reg.status.toUpperCase()}
-          </div>
-        </div>
+    function registrar() {
+        const resp = document.getElementById('select-func').value;
+        const mod = document.getElementById('input-modelo').value.toUpperCase();
+        const mot = document.getElementById('select-motivo').value;
+        const pedido = document.getElementById('input-pedido').value.trim();
+        const outros = document.getElementById('input-outros').value.trim();
+        const st = document.getElementById('select-status').value;
+        const data = new Date().toLocaleDateString('pt-BR');
 
-        <div id="d${i}" class="hidden">
-          <ul>${itens}</ul>
+        if (!resp) { alert("Selecione um funcionário!"); return; }
+        if (!mod) { alert("Digite o modelo!"); return; }
 
-          ${reg.status === "pendente" 
-            ? `<button class="botao primary" onclick="concluir(${i})">Concluir</button>` 
-            : ""}
+        let detalheFinal = mot;
+        if (mot === 'EMPRÉSTIMO CLIENTE') {
+            if (!pedido) { alert("O número do pedido é obrigatório para empréstimos!"); return; }
+            detalheFinal = `PEDIDO: ${pedido}`;
+        }
+        if (mot === 'OUTROS') {
+            if (!outros) { alert("Por favor, especifique o motivo em 'Outros'!"); return; }
+            detalheFinal = outros.toUpperCase();
+        }
 
-          <button class="btn-delete" onclick="deletar(${i})">🗑️ Excluir registro</button>
-        </div>
-      </div>`;
-  });
-}
+        registros.unshift({ 
+            data, 
+            responsavel: resp, 
+            modelo: mod, 
+            motivo: detalheFinal, 
+            status: st,
+            statusOriginal: st 
+        });
 
-function concluir(i){
-  let r=JSON.parse(localStorage.getItem("registros"));
-  r[i].status="concluido";
-  localStorage.setItem("registros",JSON.stringify(r));
-  renderHistorico();
-  showToast("Concluído");
-}
+        document.getElementById('input-modelo').value = '';
+        document.getElementById('input-pedido').value = '';
+        document.getElementById('input-outros').value = '';
+        renderTable('TUDO');
+    }
 
-function deletar(i){
-  if(confirm("Excluir?")){
-    let r=JSON.parse(localStorage.getItem("registros"));
-    r.splice(i,1);
-    localStorage.setItem("registros",JSON.stringify(r));
-    renderHistorico();
-    showToast("Removido","#ff3b30");
-  }
-}
+    function renderTable(filter) {
+        const body = document.getElementById('table-body');
+        body.innerHTML = '';
 
-function abrirRelatorio(){
-  tela4.style.display="none";
-  tela5.style.display="block";
-  gerarRelatorio();
-}
+        registros.forEach((reg, index) => {
+            const isFora = reg.status.includes("FORA");
+            if (filter === 'FORA' && !isFora) return;
+            if (filter === 'RETORNOU' && isFora) return;
 
-function voltarHistorico(){
-  tela5.style.display="none";
-  tela4.style.display="block";
-}
+            const badgeClass = isFora ? 'b-fora' : 'b-retorno';
+            const actionBtn = isFora 
+                ? `<button class="btn-action" onclick="alterarStatus(${index}, 'RETORNOU')">BAIXA</button>` 
+                : `<button class="btn-action btn-undo" onclick="alterarStatus(${index}, '${reg.statusOriginal}')">DESFAZER</button>`;
 
-function setFiltro(tipo,el){
-  filtroAtual=tipo;
-  document.querySelectorAll(".filtro-btn").forEach(b=>b.classList.remove("active"));
-  el.classList.add("active");
-  gerarRelatorio();
-}
+            body.innerHTML += `
+                <tr>
+                    <td>${reg.data}</td>
+                    <td>${reg.responsavel}</td>
+                    <td>${reg.modelo}</td>
+                    <td>${reg.motivo}</td>
+                    <td><span class="badge ${badgeClass}">${reg.status}</span></td>
+                    <td>${actionBtn}</td>
+                </tr>`;
+        });
+    }
 
-function gerarRelatorio(){
-  let r=JSON.parse(localStorage.getItem("registros"))||[];
-  let now=new Date();
+    function alterarStatus(index, novoStatus) {
+        registros[index].status = novoStatus;
+        renderTable('TUDO');
+    }
 
-  let filtrados=r.filter(reg=>{
-    let d=new Date(reg.date);
-    if(filtroAtual==="hoje") return d.toDateString()===now.toDateString();
-    if(filtroAtual==="7") return (now-d)/(1000*60*60*24)<=7;
-    if(filtroAtual==="30") return (now-d)/(1000*60*60*24)<=30;
-    return true;
-  });
-
-  let html="";
-
-  for(let cat in items){
-    let total={};
-    items[cat].forEach(i=>total[i]=0);
-
-    filtrados.forEach(reg=>{
-      for(let i in reg.data){
-        if(total[i]!=undefined) total[i]+=reg.data[i];
-      }
-    });
-
-    let ordenado=Object.entries(total).sort((a,b)=>b[1]-a[1]);
-
-    html+=`<div class="card"><h3>${cat}</h3>`;
-    ordenado.forEach(([nome,qtd])=>{
-      if(qtd>0) html+=`<p>${nome}: <b>${qtd}</b></p>`;
-    });
-    html+="</div>";
-  }
-
-  relatorio.innerHTML = html || "<p>Nada no período</p>";
-}
-
-function back(){
-  tela3.style.display="none";
-  tela2.style.display="block";
-}
-
-init();
+    function filterTable(type) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        renderTable(type);
+    }
 </script>
 
 </body>
