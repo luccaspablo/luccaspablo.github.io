@@ -119,11 +119,11 @@
     <div id="tab-registro" class="section active">
         <div class="form-card">
             <div class="form-group"><label>Responsável</label><select id="f-resp"></select></div>
-            <div class="form-group"><label>Modelo / Cor</label><input type="text" id="f-modelo" placeholder="Ex: GATTO"></div>
+            <div class="form-group"><label>Modelo / Cor</label><input type="text" id="f-modelo" placeholder="Ex: LUC CHAMPAGNE"></div>
             <div class="form-group">
                 <label>Motivo</label>
                 <select id="f-motivo" onchange="checkMotivo()">
-                    <option value="REPOSIÇÃO LENSES">REPOSIÇÃO LENSES</option>
+                    <option value="REPOSIÇÃO DE LENTES">REPOSIÇÃO DE LENTES</option>
                     <option value="EMPRÉSTIMO CLIENTE">EMPRÉSTIMO CLIENTE</option>
                     <option value="OUTROS">OUTROS</option>
                 </select>
@@ -160,7 +160,7 @@
 
 <script>
     let db = [];
-    let equipe = ["ANA", "CARLOS", "JULIA"];
+    let equipe = ["EMINEM", "LUCAS", "2PAC"];
 
     function switchTab(id, el) {
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
