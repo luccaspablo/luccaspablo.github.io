@@ -3,282 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zerezes - Gestão de Externos v4.1</title>
+    <title>Zerezes - Gestão de Externos</title>
     <style>
         :root {
             --brand-black: #000000;
             --brand-gray: #f2f2f2;
-            --accent-green: #d4edda;
-            --accent-text-green: #155724;
             --border-color: #e0e0e0;
-            --text-main: #222;
+            --accent-red: #fee2e2;
+            --accent-green: #d4edda;
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #ffffff;
-            color: var(--text-main);
-            margin: 0;
-            padding: 20px;
-            letter-spacing: 0.5px;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            margin: 0; padding: 0; background: #fff; color: #000;
+            letter-spacing: 0.2px;
         }
 
-        .container { 
-            max-width: 100%; /* Permite que a tabela ocupe toda a largura da tela */
-            margin: 0 auto; 
-            overflow-x: auto; /* Adiciona barra de rolagem horizontal se necessário */
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+
+        header { border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; text-align: center; }
+        header h1 { text-transform: uppercase; font-size: 1.1rem; letter-spacing: 2px; font-weight: 900; }
+
+        nav { display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; }
+        .nav-link { 
+            text-transform: uppercase; font-size: 0.7rem; font-weight: bold; 
+            text-decoration: none; color: #999; padding-bottom: 5px; cursor: pointer;
         }
+        .nav-link.active { color: #000; border-bottom: 2px solid #000; }
 
-        header {
-            border-bottom: 2px solid var(--brand-black);
-            margin-bottom: 30px;
-            padding-bottom: 10px;
-        }
-
-        header h1 { text-transform: uppercase; font-weight: 900; font-size: 1.5rem; margin: 0; }
-
-        /* FORMULÁRIO */
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            background: var(--brand-gray);
-            padding: 20px;
-            border-radius: 4px;
-            width: 100%;
-        }
-
-        .conditional-field {
-            display: none;
-            background: #e9e9e9;
-            padding: 10px;
-            border-left: 3px solid var(--brand-black);
-            grid-column: 1 / -1;
-        }
-
-        label { font-size: 0.7rem; text-transform: uppercase; font-weight: bold; display: block; margin-bottom: 5px; }
-
-        input, select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 0;
-            background: white;
-            font-size: 0.9rem;
-        }
-
-        .btn-main {
-            background: var(--brand-black);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            text-transform: uppercase;
-            font-weight: bold;
-            font-size: 0.8rem;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 5px;
-        }
-
-        /* TABELA E FILTROS */
-        .filters { display: flex; gap: 10px; margin: 40px 0 15px 0; }
+        .form-card { background: var(--brand-gray); padding: 20px; margin-bottom: 30px; }
+        .form-group { margin-bottom: 15px; }
+        label { font-size: 0.6rem; font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 5px; }
         
+        input, select {
+            width: 100%; padding: 12px; border: 1px solid var(--border-color);
+            background: #fff; font-size: 0.85rem; border-radius: 0;
+        }
+
+        .conditional { display: none; background: #eee; padding: 15px; margin-top: -15px; margin-bottom: 15px; }
+
+        .btn-black {
+            background: #000; color: #fff; border: none; padding: 15px;
+            width: 100%; text-transform: uppercase; font-weight: bold; cursor: pointer; font-size: 0.75rem;
+        }
+
+        /* FILTROS CENTRALIZADOS */
+        .filters { 
+            display: flex; 
+            justify-content: center; /* Centraliza os botões */
+            gap: 8px; 
+            margin-bottom: 25px; 
+            padding: 0 10px;
+        }
         .filter-btn {
-            background: var(--brand-gray);
-            border: none;
-            padding: 8px 15px;
-            font-size: 0.75rem;
-            cursor: pointer;
-            border-radius: 20px;
-            text-transform: uppercase;
+            background: var(--brand-gray); border: none; padding: 6px 12px;
+            font-size: 0.65rem; border-radius: 20px; white-space: nowrap; cursor: pointer;
+            text-transform: uppercase; font-weight: bold; color: #666;
         }
-        .filter-btn.active { background: var(--brand-black); color: white; }
+        .filter-btn.active { background: #000; color: #fff; }
 
-        .table-wrapper { width: 100%; }
+        /* LISTA EM CARDS (MOBILE & TABLET) */
+        .card-item {
+            background: #fff; border: 1px solid var(--border-color);
+            margin-bottom: 12px; padding: 16px;
+        }
+        .card-row {
+            display: flex; justify-content: space-between; align-items: baseline;
+            padding: 4px 0; border-bottom: 1px solid #f9f9f9;
+        }
+        .card-row:last-of-type { border-bottom: none; margin-bottom: 10px; }
 
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            table-layout: auto; /* Permite que a tabela se adapte ao conteúdo */
+        /* Ajuste de Fontes nos Cards */
+        .card-label { 
+            font-size: 0.65rem; /* Esquerda menor e sutil */
+            font-weight: bold; 
+            text-transform: uppercase; 
+            color: #999; 
+        }
+        .card-value { 
+            font-size: 0.8rem; /* Direita um pouco maior que o label, mas equilibrada */
+            font-weight: 500; 
+            text-align: right;
+            max-width: 60%;
         }
 
-        th { text-align: left; font-size: 0.7rem; text-transform: uppercase; padding: 15px 10px; border-bottom: 1px solid var(--brand-black); white-space: nowrap; /* Impede que o texto do cabeçalho quebre */ }
-        td { padding: 15px 10px; border-bottom: 1px solid var(--brand-gray); font-size: 0.85rem; word-wrap: break-word; /* Quebra o texto se necessário */ }
+        .badge { font-size: 0.6rem; padding: 3px 8px; font-weight: bold; text-transform: uppercase; }
+        .b-fora { background: var(--accent-red); color: #991b1b; }
+        .b-retorno { background: var(--accent-green); color: #155724; }
 
-        .badge { font-size: 0.65rem; padding: 4px 8px; text-transform: uppercase; font-weight: bold; }
-        .b-fora { background: #fee2e2; color: #991b1b; }
-        .b-retorno { background: var(--accent-green); color: var(--accent-text-green); }
-
-        .btn-action {
-            border: 1px solid var(--brand-black);
-            background: none;
-            font-size: 0.7rem;
-            padding: 5px 10px;
-            cursor: pointer;
-            font-weight: bold;
-            white-space: nowrap;
+        .btn-action { 
+            border: 1px solid #000; background: none; padding: 10px; 
+            width: 100%; font-size: 0.7rem; font-weight: bold; 
+            cursor: pointer; text-transform: uppercase;
         }
-        .btn-undo { border-color: #999; color: #999; }
+        
+        .section { display: none; }
+        .section.active { display: block; }
+
+        .team-item { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid var(--brand-gray); font-size: 0.8rem; }
+        .btn-del { color: red; background: none; border: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <header><h1>Zerezes <span style="font-weight:300; font-size:0.9rem;">| Gestão de Externos</span></h1></header>
+    <header><h1>Zerezes - Rio Sul</h1></header>
 
-    <div class="form-grid">
-        <div>
-            <label>Responsável</label>
-            <select id="select-func">
-                <option value="">Selecione...</option>
-                <option value="ANA">ANA</option>
-                <option value="CARLOS">CARLOS</option>
-                <option value="JULIA">JULIA</option>
-            </select>
-        </div>
-        <div>
-            <label>Modelo / Cor</label>
-            <input type="text" id="input-modelo" placeholder="Ex: GATTO - TARTARUGA">
-        </div>
-        <div>
-            <label>Motivo</label>
-            <select id="select-motivo" onchange="toggleFields()">
-                <option value="REPOSIÇÃO LENTES">REPOSIÇÃO LENTES</option>
-                <option value="EMPRÉSTIMO CLIENTE">EMPRÉSTIMO CLIENTE</option>
-                <option value="OUTROS">OUTROS</option>
-            </select>
-        </div>
-        
-        <div id="field-pedido" class="conditional-field">
-            <label>Nº do Pedido (Obrigatório)</label>
-            <input type="text" id="input-pedido" placeholder="Digite o número do pedido">
-        </div>
+    <nav>
+        <div class="nav-link active" onclick="switchTab('tab-registro', this)">Registros</div>
+        <div class="nav-link" onclick="switchTab('tab-equipe', this)">Equipe</div>
+    </nav>
 
-        <div id="field-outros" class="conditional-field">
-            <label>Especifique o Motivo (Obrigatório)</label>
-            <input type="text" id="input-outros" placeholder="Descreva o motivo da saída">
+    <div id="tab-registro" class="section active">
+        <div class="form-card">
+            <div class="form-group"><label>Responsável</label><select id="f-resp"></select></div>
+            <div class="form-group"><label>Modelo / Cor</label><input type="text" id="f-modelo" placeholder="Ex: GATTO"></div>
+            <div class="form-group">
+                <label>Motivo</label>
+                <select id="f-motivo" onchange="checkMotivo()">
+                    <option value="REPOSIÇÃO LENSES">REPOSIÇÃO LENSES</option>
+                    <option value="EMPRÉSTIMO CLIENTE">EMPRÉSTIMO CLIENTE</option>
+                    <option value="OUTROS">OUTROS</option>
+                </select>
+            </div>
+            <div id="c-pedido" class="conditional"><label>Nº do Pedido</label><input type="text" id="f-pedido"></div>
+            <div id="c-outros" class="conditional"><label>Especifique</label><input type="text" id="f-outros"></div>
+            <div class="form-group">
+                <label>Status</label>
+                <select id="f-status">
+                    <option value="FORA (SOLAR)">FORA (SOLAR)</option>
+                    <option value="FORA (GRAU)">FORA (GRAU)</option>
+                </select>
+            </div>
+            <button class="btn-black" onclick="salvar()">Registrar Saída</button>
         </div>
 
-        <div>
-            <label>Status</label>
-            <select id="select-status">
-                <option value="FORA (SOLAR)">FORA (SOLAR)</option>
-                <option value="FORA (GRAU)">FORA (GRAU)</option>
-            </select>
+        <div class="filters">
+            <button class="filter-btn active" onclick="render('TUDO', this)">Tudo</button>
+            <button class="filter-btn" onclick="render('FORA', this)">Fora</button>
+            <button class="filter-btn" onclick="render('RETORNOU', this)">Retornou</button>
         </div>
-        <div>
-            <label>&nbsp;</label> <button class="btn-main" onclick="registrar()">Registrar</button>
-        </div>
+
+        <div id="lista-cards"></div>
     </div>
 
-    <div class="filters">
-        <button class="filter-btn active" onclick="filterTable('TUDO')">TUDO</button>
-        <button class="filter-btn" onclick="filterTable('FORA')">FORA</button>
-        <button class="filter-btn" onclick="filterTable('RETORNOU')">RETORNOU</button>
-    </div>
-
-    <div class="table-wrapper">
-        <table id="main-table">
-            <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Responsável</th>
-                    <th>Modelo</th>
-                    <th>Motivo</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody id="table-body"></tbody>
-        </table>
+    <div id="tab-equipe" class="section">
+        <div class="form-card">
+            <label>Novo Integrante</label>
+            <div style="display:flex; gap:10px;"><input type="text" id="new-name"><button class="btn-black" style="width:60px; margin:0;" onclick="addEquipe()">ADD</button></div>
+        </div>
+        <div id="equipe-lista"></div>
     </div>
 </div>
 
 <script>
-    let registros = [];
+    let db = [];
+    let equipe = ["ANA", "CARLOS", "JULIA"];
 
-    function toggleFields() {
-        const motivo = document.getElementById('select-motivo').value;
-        document.getElementById('field-pedido').style.display = (motivo === 'EMPRÉSTIMO CLIENTE') ? 'block' : 'none';
-        document.getElementById('field-outros').style.display = (motivo === 'OUTROS') ? 'block' : 'none';
+    function switchTab(id, el) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        el.classList.add('active');
     }
 
-    function registrar() {
-        const resp = document.getElementById('select-func').value;
-        const mod = document.getElementById('input-modelo').value.toUpperCase();
-        const mot = document.getElementById('select-motivo').value;
-        const pedido = document.getElementById('input-pedido').value.trim();
-        const outros = document.getElementById('input-outros').value.trim();
-        const st = document.getElementById('select-status').value;
-        const data = new Date().toLocaleDateString('pt-BR');
-
-        if (!resp) { alert("Selecione um funcionário!"); return; }
-        if (!mod) { alert("Digite o modelo!"); return; }
-
-        let detalheFinal = mot;
-        if (mot === 'EMPRÉSTIMO CLIENTE') {
-            if (!pedido) { alert("O número do pedido é obrigatório para empréstimos!"); return; }
-            detalheFinal = `PEDIDO: ${pedido}`;
-        }
-        if (mot === 'OUTROS') {
-            if (!outros) { alert("Por favor, especifique o motivo em 'Outros'!"); return; }
-            detalheFinal = outros.toUpperCase();
-        }
-
-        registros.unshift({ 
-            data, 
-            responsavel: resp, 
-            modelo: mod, 
-            motivo: detalheFinal, 
-            status: st,
-            statusOriginal: st 
-        });
-
-        document.getElementById('input-modelo').value = '';
-        document.getElementById('input-pedido').value = '';
-        document.getElementById('input-outros').value = '';
-        renderTable('TUDO');
+    function checkMotivo() {
+        const v = document.getElementById('f-motivo').value;
+        document.getElementById('c-pedido').style.display = v === 'EMPRÉSTIMO CLIENTE' ? 'block' : 'none';
+        document.getElementById('c-outros').style.display = v === 'OUTROS' ? 'block' : 'none';
     }
 
-    function renderTable(filter) {
-        const body = document.getElementById('table-body');
-        body.innerHTML = '';
+    function addEquipe() {
+        const n = document.getElementById('new-name').value.toUpperCase();
+        if(n) { equipe.push(n); document.getElementById('new-name').value=''; updateEquipeUI(); }
+    }
 
-        registros.forEach((reg, index) => {
-            const isFora = reg.status.includes("FORA");
-            if (filter === 'FORA' && !isFora) return;
-            if (filter === 'RETORNOU' && isFora) return;
-
-            const badgeClass = isFora ? 'b-fora' : 'b-retorno';
-            const actionBtn = isFora 
-                ? `<button class="btn-action" onclick="alterarStatus(${index}, 'RETORNOU')">BAIXA</button>` 
-                : `<button class="btn-action btn-undo" onclick="alterarStatus(${index}, '${reg.statusOriginal}')">DESFAZER</button>`;
-
-            body.innerHTML += `
-                <tr>
-                    <td>${reg.data}</td>
-                    <td>${reg.responsavel}</td>
-                    <td>${reg.modelo}</td>
-                    <td>${reg.motivo}</td>
-                    <td><span class="badge ${badgeClass}">${reg.status}</span></td>
-                    <td>${actionBtn}</td>
-                </tr>`;
+    function updateEquipeUI() {
+        const sel = document.getElementById('f-resp');
+        const list = document.getElementById('equipe-lista');
+        sel.innerHTML = '<option value="">Selecione...</option>';
+        list.innerHTML = '';
+        equipe.forEach((m, i) => {
+            sel.innerHTML += `<option value="${m}">${m}</option>`;
+            list.innerHTML += `<div class="team-item">${m} <button class="btn-del" onclick="equipe.splice(${i},1);updateEquipeUI()">✕</button></div>`;
         });
     }
 
-    function alterarStatus(index, novoStatus) {
-        registros[index].status = novoStatus;
-        renderTable('TUDO');
+    function salvar() {
+        const resp = document.getElementById('f-resp').value;
+        const mod = document.getElementById('f-modelo').value.toUpperCase();
+        const mot = document.getElementById('f-motivo').value;
+        const ped = document.getElementById('f-pedido').value;
+        const out = document.getElementById('f-outros').value;
+        const st = document.getElementById('f-status').value;
+
+        if(!resp || !mod) return alert("Preencha Responsável e Modelo");
+        let desc = mot === 'EMPRÉSTIMO CLIENTE' ? `PEDIDO: ${ped}` : (mot === 'OUTROS' ? out.toUpperCase() : mot);
+        
+        db.unshift({ data: new Date().toLocaleDateString('pt-BR'), resp, mod, desc, st, stOrig: st });
+        document.getElementById('f-modelo').value = '';
+        render('TUDO');
     }
 
-    function filterTable(type) {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        event.currentTarget.classList.add('active');
-        renderTable(type);
+    function render(f, btn) {
+        if(btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+        const container = document.getElementById('lista-cards');
+        container.innerHTML = '';
+        
+        db.forEach((item, i) => {
+            const isFora = item.st.includes("FORA");
+            if(f === 'FORA' && !isFora) return;
+            if(f === 'RETORNOU' && isFora) return;
+
+            container.innerHTML += `
+                <div class="card-item">
+                    <div class="card-row"><span class="card-label">Data</span><span class="card-value">${item.data}</span></div>
+                    <div class="card-row"><span class="card-label">Responsável</span><span class="card-value">${item.resp}</span></div>
+                    <div class="card-row"><span class="card-label">Modelo</span><span class="card-value">${item.mod}</span></div>
+                    <div class="card-row"><span class="card-label">Motivo</span><span class="card-value">${item.desc}</span></div>
+                    <div class="card-row"><span class="card-label">Status</span><span class="badge ${isFora?'b-fora':'b-retorno'}">${item.st}</span></div>
+                    <button class="btn-action" onclick="toggleStatus(${i})">${isFora?'Dar Baixa':'Desfazer Baixa'}</button>
+                </div>`;
+        });
     }
+
+    function toggleStatus(i) {
+        db[i].st = db[i].st.includes("FORA") ? "RETORNOU" : db[i].stOrig;
+        render('TUDO');
+    }
+
+    updateEquipeUI();
 </script>
-
 </body>
 </html>
