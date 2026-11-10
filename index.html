@@ -266,6 +266,26 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border:0;border-radiu
 #v-inicio .rail{position:relative;z-index:2;margin-top:-100px;padding-top:0}
 #v-inicio .hc{background:rgba(22,35,47,.66);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-color:rgba(255,255,255,.08)}
 @media (max-aspect-ratio:1/1){#v-inicio .rail{margin-top:-64px}}
+/* ===== Vidro líquido ===== */
+body{background:radial-gradient(1100px 560px at 12% -8%,rgba(74,163,216,.24),transparent 62%),radial-gradient(900px 520px at 98% 6%,rgba(127,211,234,.13),transparent 58%),radial-gradient(800px 600px at 50% 110%,rgba(74,163,216,.12),transparent 60%),var(--bg);background-attachment:fixed}
+.card{position:relative;background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.03));-webkit-backdrop-filter:blur(22px) saturate(165%);backdrop-filter:blur(22px) saturate(165%);border:1px solid rgba(255,255,255,.09);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 12px 32px rgba(0,0,0,.28)}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(145deg,rgba(255,255,255,.4),rgba(255,255,255,.05) 38%,rgba(255,255,255,0) 62%,rgba(255,255,255,.2));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.bp .card,.verdict{background:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.bp .card::before,.verdict::before{display:none}
+#v-camadas .card{-webkit-backdrop-filter:none;backdrop-filter:none;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.035))}
+.card.rec{box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 0 0 2px var(--accent),0 12px 32px rgba(0,0,0,.28)}
+nav.top{-webkit-backdrop-filter:blur(26px) saturate(180%);backdrop-filter:blur(26px) saturate(180%);background:rgba(15,25,35,.5);box-shadow:0 1px 0 rgba(255,255,255,.08)}
+.seg{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);-webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
+.seg .btn{background:transparent;border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.seg .btn.on{background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,.12));box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 2px 8px rgba(0,0,0,.25);color:#fff}
+.btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,.24);color:var(--ink)}
+.shb{background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
+.shb.on{background:rgba(74,163,216,.22);border-color:rgba(127,211,234,.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 0 18px rgba(74,163,216,.35)}
+#v-inicio .hc{background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.035));box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 10px 28px rgba(0,0,0,.3)}
+.chips span{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14)}
+.wheel::after{background:rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.22)}
+.lgd.on{background:rgba(255,255,255,.12)}
+.tag{background:rgba(127,211,234,.18)}
 </style>
 </head>
 <body>
@@ -286,7 +306,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border:0;border-radiu
 </div>
 <div class="card" id="lg3" hidden></div>
 </section>
-<div class="card verdict" id="verdict"></div>
+<div class="card verdict" id="verdict" hidden></div>
 <div class="card dock" id="dock"></div>
 <div hidden><output id="o_sph"></output><output id="o_cyl"></output><output id="o_axis"></output><output id="o_size"></output>
 <input id="sph" type="range" min="-13" max="12" step="0.25" value="-5"><input id="cyl" type="range" min="-6" max="0" step="0.25" value="-1"><input id="axis" type="range" min="0" max="180" step="5" value="90"><input id="size" type="range" min="36" max="62" step="1" value="50">
@@ -362,7 +382,7 @@ var AS={"hero": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYF
 var TECH={cMin:1.5,eMin:1.0}; /* VALORES MÉDIOS PROVISÓRIOS: substituir pelos dados do laboratório */
 var M3=true,RX3=-0.5,RY3=-0.75,G3={},D3=null,WH={};
 var IDX=[[1.56,"1,56 · Resina"],[1.59,"1,59 · Policarbonato"],[1.67,"1,67 · Resina"]];
-var SH={r:[1,2],o:[0.8,2.4],q:[0.68,3.5],g:[0.78,2.4],a:[0.9,2.2],h:[0.76,2],s:[0.86,3]};
+var SH={r:[1,2],o:[0.688,2],q:[0.68,3.5],g:[0.78,2.4],a:[0.9,2.2],h:[0.76,2],s:[0.86,3]};
 var CAT=[0.9796, 0.9837, 0.9802, 0.9678, 0.9464, 0.9177, 0.8853, 0.8521, 0.8191, 0.7883, 0.7605, 0.7342, 0.7103, 0.6897, 0.671, 0.6535, 0.638, 0.6238, 0.6112, 0.601, 0.5919, 0.5833, 0.5761, 0.5705, 0.5665, 0.5643, 0.5635, 0.563, 0.5638, 0.567, 0.5713, 0.5761, 0.5825, 0.5906, 0.5999, 0.6115, 0.6249, 0.6401, 0.6578, 0.6774, 0.6996, 0.7245, 0.7524, 0.784, 0.8191, 0.8588, 0.9033, 0.9534, 1.011, 1.0723, 1.1195, 1.1294, 1.1013, 1.0565, 1.0115, 0.9697, 0.9311, 0.8966, 0.8658, 0.8374, 0.8119, 0.7894, 0.769, 0.7511, 0.7353, 0.7213, 0.7098, 0.7002, 0.6919, 0.6846, 0.6785, 0.6739, 0.6707, 0.6688, 0.6675, 0.6661, 0.6659, 0.6669, 0.6685, 0.6702, 0.672, 0.6747, 0.6785, 0.6825, 0.6862, 0.6905, 0.6953, 0.6996, 0.7031, 0.7063, 0.7095, 0.7128, 0.7165, 0.7211, 0.7259, 0.7307, 0.7361, 0.7425, 0.7492, 0.7559, 0.7634, 0.7717, 0.7797, 0.7878, 0.7969, 0.806, 0.8143, 0.8229, 0.832, 0.8408, 0.8502, 0.8604, 0.8706, 0.8808, 0.892, 0.9051, 0.9191, 0.9346, 0.9523, 0.9686];
 function catr(th){var N=CAT.length,u=((th%(2*Math.PI))+2*Math.PI)%(2*Math.PI)/(2*Math.PI)*N,i=Math.floor(u)%N,f=u-Math.floor(u);return CAT[i]*(1-f)+CAT[(i+1)%N]*f}
 function oct(th,a,b){
