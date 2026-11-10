@@ -254,6 +254,12 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border:0;border-radiu
 .gS i{position:absolute;background:rgba(255,255,255,.55);filter:blur(.6px);transform:rotate(-12deg);width:17%;height:14%}
 .gS .p1{left:14%;top:16%}.gS .p2{left:33%;top:16%}.gS .p3{left:14%;top:32%}.gS .p4{left:33%;top:32%}
 .gD{position:absolute;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:rgba(255,255,255,.95);box-shadow:0 0 8px rgba(255,255,255,.8)}
+.gl-l{position:absolute;bottom:13%;font-size:11px;font-weight:700;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.65)}
+.gl-l.gl-a{left:15%}.gl-l.gl-b{right:15%}
+.gl.nos .gl-l{display:none}
+.gD::after{content:"‹ ›";position:absolute;top:50%;left:50%;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;background:#fff;color:#0F1923;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.45);white-space:pre}
+.hero{width:min(100%,calc(52vh*1.7917));width:min(100%,calc(52dvh*1.7917));margin-left:auto;margin-right:auto}
+@media (max-height:500px){.cmst .stage,.stage{height:300px}.hc{height:150px}}
 </style>
 </head>
 <body>
@@ -319,7 +325,6 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border:0;border-radiu
 <label class="chk"><input id="az" type="checkbox" checked><span>Filtro de luz azul</span></label></div>
 <div class="arcenter"><div class="seg" id="seg-rc"><button type="button" class="btn on" data-c="Verde">Verde</button><button type="button" class="btn" data-c="Azul">Azul</button><button type="button" class="btn" data-c="Sem">Sem AR</button></div></div>
 <div class="cmst" id="cm"><div id="dt3" class="dside"></div><div class="stage" id="stage"><div class="scene" id="sc3"></div></div><div id="ld" class="lside"></div></div>
-<div class="arc" id="arc"><span>Sem AR</span><input id="arsl" type="range" min="0" max="100" step="1" value="50" aria-label="Comparar sem e com antirreflexo"><span>Com AR</span></div>
 <div class="tbr"><button type="button" class="btn" id="tg3">Separar camadas</button><button type="button" class="btn" id="tour">Tour</button><button type="button" class="btn" id="det">Ocultar detalhes</button></div>
 </section>
 </div>
@@ -618,7 +623,7 @@ ar:{n:"Antirreflexo",r:[120,225,160],d:"Reduz os reflexos e deixa o olhar mais l
 az:{n:"Filtro de luz azul",r:[80,120,255],d:"Reduz o cansaço visual de quem passa muitas horas em telas e sob iluminação LED.",w:"Opcional"},
 ri:{n:"Antirrisco",r:[255,205,110],d:"Camada resistente que protege a lente dos riscos do dia a dia.",w:"De fábrica na 1,67 · nas demais, com o filtro azul"}};
 var LBS={1.56:["Resina 1,56","Boa nitidez e ótimo custo-benefício. É a mais espessa das três."],1.59:["Poli 1,59","A mais resistente a impacto. Espessura intermediária."],1.67:["Resina 1,67","A mais fina e leve do portfólio."]};
-var LN=1.67,OP=false,SEL="",DET=true,MAT=new DOMMatrix().rotate(0,0,22).rotate(-42,0,0),BN={1.56:12,1.59:9,1.67:6},ARC="Verde",ARCOL={Verde:{r:[120,225,160],t:"rgba(120,225,160,"},Azul:{r:[100,160,255],t:"rgba(100,160,255,"}},TOUR=null,DR=null;
+var LN=1.67,OP=false,SEL="",DET=true,SPL=50,FACE=new DOMMatrix().rotate(-8,0,0),MAT=new DOMMatrix().rotate(-8,0,0),MATF=new DOMMatrix().rotate(0,0,22).rotate(-42,0,0),BN={1.56:12,1.59:9,1.67:6},ARC="Verde",ARCOL={Verde:{r:[120,225,160],t:"rgba(120,225,160,"},Azul:{r:[100,160,255],t:"rgba(100,160,255,"}},TOUR=null,DR=null;
 function mstr(m,z){var t=m.translate(0,0,z);return "matrix3d("+[t.m11,t.m12,t.m13,t.m14,t.m21,t.m22,t.m23,t.m24,t.m31,t.m32,t.m33,t.m34,t.m41,t.m42,t.m43,t.m44].join(",")+")"}
 function rgba(r,a){return "rgba("+r[0]+","+r[1]+","+r[2]+","+a+")"}
 function lyList(){var a=[],az=$("az").checked;if(LN===1.67)a.push("lip","hid");if(ARC!=="Sem")a.push("ar");if(az)a.push("az");if(az||LN===1.67)a.push("ri");a.push("base");return a}
@@ -631,7 +636,7 @@ function buildL(){
     if(k==="base"){for(j=0;j<BN[LN];j++)h+='<div class="ly" data-k="base" data-z="'+(-j*3.2)+'">'+(j===0?CPS:"")+"</div>"}
     else h+='<div class="ly" data-k="'+k+'" data-i="'+(m-i)+'">'+CPS+"</div>";
   });
-  h+='<div class="gl" id="gl3">'+CPS+'<div class="glc"><div class="gS" id="gS"><i class="p1"></i><i class="p2"></i><i class="p3"></i><i class="p4"></i></div><div class="gC" id="gC"></div><div class="gD" id="gD"></div></div></div>';
+  h+='<div class="gl" id="gl3">'+CPS+'<div class="glc"><div class="gS" id="gS"><i class="p1"></i><i class="p2"></i><i class="p3"></i><i class="p4"></i></div><div class="gC" id="gC"></div><div class="gD" id="gD"></div><b class="gl-l gl-a">Sem AR</b><b class="gl-l gl-b">Com AR</b></div></div>';
   $("sc3").innerHTML=h;posL();legL();setSplit();
 }
 function posL(){
@@ -643,15 +648,15 @@ function posL(){
     e.classList.toggle("sel",sel);
   });
   var gl=$("gl3");if(gl){gl.style.transform="translateZ("+(-(m*g+9))+"px)";gl.style.display=OP?"none":"block"}
-  $("sc3").style.transform=mstr(MAT,zc);
+  $("sc3").style.transform=mstr(MAT,zc);$("stage").style.cursor=OP?"grab":(ARC==="Sem"?"default":"ew-resize");
 }
 function setSplit(){
   var gS=$("gS"),gC=$("gC"),gD=$("gD");if(!gS)return;
-  var none=ARC==="Sem",x=none?100:+$("arsl").value,c=ARCOL[none?"Verde":ARC];
+  var none=ARC==="Sem",x=none?100:SPL,c=ARCOL[none?"Verde":ARC];
   gS.style.clipPath="inset(0 "+(100-x)+"% 0 0)";gC.style.clipPath="inset(0 0 0 "+x+"%)";
   gC.style.background="radial-gradient(circle at 72% 28%,"+c.t+".5),transparent 36%),linear-gradient(135deg,"+c.t+".16),transparent 60%)";
   gD.style.left=x+"%";gD.style.display=(none||x<=0||x>=100)?"none":"block";
-  $("arc").hidden=none;
+  $("gl3").classList.toggle("nos",none);
 }
 function legL(){
   var a=lyList(),n=a.length,sd=SEL?lyInfo(SEL):null,ld=$("ld"),dt=$("dt3");
@@ -666,26 +671,35 @@ function legL(){
 function stopTour(){if(TOUR){clearInterval(TOUR);TOUR=null}$("tour").textContent="Tour"}
 function runTour(){
   if(TOUR){stopTour();return}
-  var a=lyList(),i=0;OP=true;SEL=a[0];posL();legL();$("tour").textContent="Parar";
+  var a=lyList(),i=0;setOP(true);SEL=a[0];posL();legL();$("tour").textContent="Parar";
   TOUR=setInterval(function(){i++;if(i>=a.length){stopTour();return}SEL=a[i];posL();legL()},2400);
 }
+function setOP(v){
+  if(v===OP)return;var sc=$("sc3");
+  sc.style.transition="transform .6s cubic-bezier(.2,.8,.2,1)";
+  if(v){MAT=MATF}else{MATF=MAT;MAT=FACE;SEL=""}
+  OP=v;posL();legL();setTimeout(function(){sc.style.transition=""},650);
+}
+function moveSplit(cx){var r=$("gl3").getBoundingClientRect();if(!r.width)return;SPL=Math.max(0,Math.min(100,(cx-r.left)/r.width*100));setSplit()}
 function renderL(){buildL()}
 $("az").addEventListener("change",function(){stopTour();buildL()});
 document.querySelectorAll("#seg-l .btn").forEach(function(b){b.addEventListener("click",function(){stopTour();LN=+b.dataset.n;document.querySelectorAll("#seg-l .btn").forEach(function(x){x.classList.toggle("on",x===b)});buildL()})});
 document.querySelectorAll("#seg-rc .btn").forEach(function(b){b.addEventListener("click",function(){stopTour();ARC=b.dataset.c;if(ARC!=="Sem")LYD.ar.r=ARCOL[ARC].r;document.querySelectorAll("#seg-rc .btn").forEach(function(x){x.classList.toggle("on",x===b)});buildL()})});
-$("arsl").addEventListener("input",function(){rg(this);setSplit()});
-$("tg3").addEventListener("click",function(){stopTour();OP=!OP;if(!OP)SEL="";posL();legL()});
+$("tg3").addEventListener("click",function(){stopTour();setOP(!OP)});
 $("tour").addEventListener("click",runTour);
 $("det").addEventListener("click",function(){DET=!DET;$("cm").classList.toggle("nodet",!DET);$("det").textContent=DET?"Ocultar detalhes":"Mostrar detalhes"});
 $("ld").addEventListener("click",function(e){var b=e.target.closest("[data-k]");if(!b)return;stopTour();SEL=SEL===b.dataset.k?"":b.dataset.k;posL();legL()});
-$("stage").addEventListener("pointerdown",function(e){DR={x:e.clientX,y:e.clientY,lx:e.clientX,ly:e.clientY,m:0};$("stage").setPointerCapture(e.pointerId)});
-$("stage").addEventListener("pointermove",function(e){if(!DR)return;var dx=e.clientX-DR.x,dy=e.clientY-DR.y;DR.m=Math.max(DR.m,Math.abs(dx),Math.abs(dy));MAT=new DOMMatrix().rotate(-(e.clientY-DR.ly)*0.5,(e.clientX-DR.lx)*0.5,0).multiply(MAT);DR.lx=e.clientX;DR.ly=e.clientY;posL()});
+$("stage").addEventListener("pointerdown",function(e){DR={x:e.clientX,y:e.clientY,lx:e.clientX,ly:e.clientY,m:0};$("stage").setPointerCapture(e.pointerId);if(!OP&&ARC!=="Sem")moveSplit(e.clientX)});
+$("stage").addEventListener("pointermove",function(e){
+  if(!DR)return;
+  DR.m=Math.max(DR.m,Math.abs(e.clientX-DR.x),Math.abs(e.clientY-DR.y));
+  if(!OP){if(ARC!=="Sem")moveSplit(e.clientX);return}
+  MAT=new DOMMatrix().rotate(-(e.clientY-DR.ly)*0.5,(e.clientX-DR.lx)*0.5,0).multiply(MAT);DR.lx=e.clientX;DR.ly=e.clientY;posL();
+});
 $("stage").addEventListener("pointerup",function(e){
-  if(!DR)return;var tap=DR.m<6;DR=null;if(!tap)return;
+  if(!DR)return;var tap=DR.m<6;DR=null;if(!tap||!OP)return;
   var t=document.elementFromPoint(e.clientX,e.clientY),l=t&&t.closest?t.closest(".ly"):null;
-  stopTour();
-  if(!OP)OP=true;else if(l)SEL=SEL===l.dataset.k?"":l.dataset.k;else{OP=false;SEL=""}
-  posL();legL();
+  stopTour();if(l)SEL=SEL===l.dataset.k?"":l.dataset.k;posL();legL();
 });
 $("stage").addEventListener("pointercancel",function(){DR=null});
 
