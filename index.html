@@ -3,15 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="robots" content="noindex,nofollow">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icons/icon-180.png">
-<link rel="icon" href="icons/icon-192.png">
-<meta name="theme-color" content="#0F1923">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Z Vision">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Z Vision</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700&family=Fraunces:wght@600;700&display=swap">
 <style>
@@ -287,7 +278,33 @@ nav.top{-webkit-backdrop-filter:blur(26px) saturate(180%);backdrop-filter:blur(2
 .lgd.on{background:rgba(255,255,255,.12)}
 .tag{background:rgba(127,211,234,.18)}
 </style>
-</head>
+<style>
+#vg{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.vgadd{display:flex;flex-direction:column;align-items:center;gap:14px;padding:44px 20px;border:1px solid rgba(255,255,255,.12);border-radius:22px;background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);color:var(--ink);font:inherit;cursor:pointer;width:100%}
+.vgadd svg{width:64px;height:64px;color:var(--accent)}
+.vgadd b{font-size:1.1rem;font-weight:600}.vgadd svg,.vgfr .fi svg{background:none!important;border:0!important;box-shadow:none!important}.vgadd b{color:var(--ink)}
+.vgnote{color:var(--muted);font-size:.85rem;text-align:center;margin:0}
+.vgcv{position:relative;border-radius:18px;overflow:hidden;background:#000;touch-action:manipulation}
+.vgcv canvas{display:block;width:100%;height:auto}
+.vgmsg{padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.06);color:var(--ink);text-align:center}
+.vgrow{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.vgres h2{margin:0 0 4px;font-size:1.4rem;text-align:center}
+.vgres .sub{text-align:center;margin:0 0 12px;color:var(--muted)}
+.vgfr{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:6px 0 14px}
+.vgfr .fi{display:flex;flex-direction:column;align-items:center;gap:4px;width:86px;padding:10px 6px;border-radius:14px;background:rgba(255,255,255,.05);font-size:.8rem}
+.vgfr .fi svg{width:54px;height:36px}
+.vgfr.ok .fi{color:var(--accent)}.vgfr.no .fi{color:#E39A8F}
+.vgl{font-size:.8rem;color:var(--muted);text-align:center;margin:0}
+.vgchip{padding:6px 12px;border-radius:999px;border:0;background:rgba(255,255,255,.07);color:var(--ink);font:inherit;font-size:.85rem;cursor:pointer}
+.vgchip.on{background:var(--ink);color:var(--bg)}
+.vgsheet{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.4);padding:12px calc(12px + env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) calc(12px + env(safe-area-inset-left,0px))}
+.vgsheet[hidden]{display:none}
+.vgsheet .sb{width:100%;max-width:420px;display:flex;flex-direction:column;gap:8px}
+.vgsheet .grp{border-radius:16px;overflow:hidden;background:rgba(40,52,64,.82);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+.vgsheet button{display:block;width:100%;padding:16px;border:0;background:transparent;color:var(--blue);font:inherit;font-size:1.05rem;cursor:pointer;margin:0;border-radius:0}
+.vgsheet .grp button+button{border-top:1px solid rgba(255,255,255,.1)}
+.vgsheet .cn{border-radius:16px;background:rgba(40,52,64,.95);font-weight:600}
+</style><meta name="robots" content="noindex,nofollow"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icons/icon-180.png"><meta name="theme-color" content="#0F1923"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Z Vision"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"></head>
 <body>
 <main>
 <nav class="top"><a id="back" href="#inicio" hidden>‹ Início</a><label class="sw" id="swl" hidden><span>Preços</span><input id="swp" type="checkbox" role="switch" checked><i></i></label></nav>
@@ -355,6 +372,13 @@ nav.top{-webkit-backdrop-filter:blur(26px) saturate(180%);backdrop-filter:blur(2
 </section>
 </div>
 
+<div id="v-visagismo" class="view" hidden>
+<h1 class="vh">Visagismo</h1>
+<div id="vg"></div>
+<input type="file" id="vgf1" accept="image/*" capture="user" hidden>
+<input type="file" id="vgf2" accept="image/*" hidden>
+<div class="vgsheet" id="vgsheet" hidden><div class="sb"><div class="grp"><button type="button" id="vgcam">Tirar foto</button><button type="button" id="vggal">Escolher da galeria</button></div><button type="button" class="cn" id="vgcan">Cancelar</button></div></div>
+</div>
 <div id="v-visao" class="view" hidden>
 <h1 class="vh">Teste de visão</h1>
 <div class="seg" id="seg-tv"><button type="button" class="btn on" data-v="ac">Acuidade</button><button type="button" class="btn" data-v="as">Astigmatismo</button><button type="button" class="btn" data-v="bi">Bicromático</button><button type="button" class="btn" data-v="pe">Perto</button></div>
@@ -490,7 +514,7 @@ var BG="";
 $("bl").addEventListener("input",renderP);$("zn").addEventListener("change",renderP);
 function route(){
   var h=(location.hash||"#inicio").slice(1);
-  if(["inicio","espessura","progressivas","tabela","catalogo","anatomia","camadas","visao"].indexOf(h)<0)h="inicio";
+  if(["inicio","espessura","progressivas","tabela","catalogo","anatomia","camadas","visao","visagismo"].indexOf(h)<0)h="inicio";
   document.querySelectorAll(".view").forEach(function(v){v.hidden=v.id!=="v-"+h});
   $("back").hidden=h==="inicio";$("swl").hidden=!(h==="tabela"||h==="catalogo");setRange();
   if(h==="progressivas")renderP();
@@ -499,6 +523,7 @@ function route(){
   if(h==="anatomia")renderA();
   if(h==="camadas")renderL();
   if(h==="visao")renderV();
+  if(h==="visagismo")renderVG();
   if(h==="espessura"&&WH.sph)syncWheels();
   if(h==="espessura"&&M3)render();
   window.scrollTo(0,0);
@@ -509,7 +534,7 @@ var LT=[
 {n:1.67,nome:"Resina 1.67",mi:10,hi:6,as:4,a2:3,av:900,inc:600,d:"Resina resistente, com ótima qualidade visual e excelente espessura, indicada para graus intermediários e altos.",f:"A mais fina do portfólio de lentes prontas. Vem com antirreflexo e camada super-hidrofóbica."},
 {n:1.67,nome:"Resina 1.67 surfaçada",sf:1,mi:13,hi:12,as:6,av:1800,inc:1500,d:"Nosso alto índice para graus mais altos, com a máxima redução de espessura.",f:"Feita sob medida (free form): campos visuais cerca de 30% maiores e menos distorção lateral."}];
 var LTO=[LT[2],LT[3],LT[1],LT[0]];
-var MFR=[{n:1.56,nome:"Resina 1.56",mi:6,hi:6,as:4,p:{mf:[1300,1000],mp:[2550,2250],oc:[1150,850]}},{n:1.59,nome:"Poli 1.59",mi:8,hi:6,as:6,p:{mf:[1750,1450],mp:[3050,2750],oc:[1550,1250]}},{n:1.67,nome:"Resina 1.67",mi:10,hi:6,as:6,p:{mf:[2250,1950],mp:[3550,3250],oc:[1950,1650]}}];
+var MFR=[{n:1.56,nome:"Resina 1.56",mi:6,hi:6,as:4,p:{mf:[1300,1000],mp:[2550,2250],oc:[1150,850]}},{n:1.59,nome:"Poli 1.59",mi:8,hi:6,as:6,p:{mf:[1750,1450],mp:[3050,2750],oc:[1550,1250]}},{n:1.67,nome:"Resina 1.67",mi:10,hi:6,as:6,a2:4,at:-8.75,p:{mf:[2250,1950],mp:[3550,3250],oc:[1950,1650]}}];
 var MFD={mf:"Distribuição balanceada da dioptria entre longe, intermediário e perto. Indicada para a rotina completa do dia a dia.",mp:"Versão free form mais completa, com transições mais amplas e naturais entre os campos. Para quem quer o melhor da linha.",oc:"Aumenta a nitidez do intermediário e do perto, para quem passa o dia em ambiente interno ou de tela. Não substitui a visão de longe."};
 function fm(v){return v.toFixed(2).replace(".",",")}
 function brl(v){return '<span class="pr">'+(v===0?"Grátis":"R$ "+v.toLocaleString("pt-BR"))+"</span>"}
@@ -517,9 +542,9 @@ function renderT(){
   var t=$("tt").value,s=+$("ts").value,c=+$("tc").value,inc=$("tk").checked,ex=($("tb").checked?300:0)+($("tg").checked?300:0);
   $("adw").hidden=t==="m";
   $("o_ts").textContent=f2(s);$("o_tc").textContent=f2(c);$("o_ta").textContent=f2(+$("ta").value);
-  var rows=t==="m"?LTO:MFR.slice().reverse().map(function(r){var q=r.p[t];return {n:r.n,nome:r.nome,mi:r.mi,hi:r.hi,as:r.as,av:q[0],inc:q[1],d:MFD[t],f:""}});
+  var rows=t==="m"?LTO:MFR.slice().reverse().map(function(r){var q=r.p[t];return {n:r.n,nome:r.nome,mi:r.mi,hi:r.hi,as:r.as,av:q[0],inc:q[1],d:MFD[t],f:"Altura mínima de montagem: "+(t==="oc"?"20":"16")+" mm."}});
   rows.forEach(function(r){
-    var lim=s<0?r.mi:r.hi,al=(r.a2&&s<=-8.25)?r.a2:r.as,w="";
+    var lim=s<0?r.mi:r.hi,al=(r.a2&&s<=(r.at||-8.25))?r.a2:r.as,w="";
     if(Math.abs(s)>lim)w=(s<0?"Miopia":"Hipermetropia")+" acima do limite desta lente ("+fm(lim)+").";
     else if(Math.abs(c)>al)w="Astigmatismo acima do limite desta lente ("+fm(al)+").";
     r.ok=!w;r.why=w;r.price=(inc?r.inc:r.av)+ex;
@@ -584,10 +609,10 @@ function renderC(){
     h='<div class="cg">'+cd("Surfaçada free form (1.67) <span class=\"tag\">Recomendada</span>",ul(["Feita sob medida, com cálculo digital do grau e da armação","Campos visuais cerca de 30% maiores, com menos distorção lateral","Mais fina, plana e leve","<b>Indicar quando:</b> astigmatismo acima de 2,00, graus altos, produto fino com coloração ou muito tempo em telas"]),"rec")+cd("Pronta (1.56, 1.59, 1.67)",ul(["Portfólio padrão, sem cálculo personalizado","Entrega mais rápida e ótimo custo-benefício","<b>Indicar quando:</b> astigmatismo abaixo de 2,00, graus leves e moderados ou prazo curto"]))+"</div>"
     +'<div style="margin-top:16px">'+cd("Faixas e valores",tb(["Lente","Faixa de grau","Avulsa","Inclusa"],LTO.map(function(r){return [r.nome,fx(r),brl(r.av),brl(r.inc)]}))+'<p class="muted">A 1.67 pronta aceita esférico de -8,25 a -10,00 com cilíndrico até -3,00. Fora disso, cilíndrico até -4,00.</p>')+"</div>";
   }else if(CT==="multi"){
-    h='<div class="cg">'+cd("Zerezes Top",ul(["Flutuação reduzida","Campo de visão amplo","Conforto visual"]))
-    +cd("Zerezes Premium (PRO)",ul(["Maior campo de perto, mesmo com adição alta","Adaptação imediata","<b>Medidas ID:</b> usa ângulo pantoscópico, ângulo da armação e distância vértice","<b>Light Path 2:</b> ajusta o caminho da luz em todas as distâncias","<b>Visão Binocular Dinâmica:</b> combina os dois olhos para foco mais rápido e mais conforto","<b>Corredores Adaptativos:</b> ajustam o corredor ao rosto de cada cliente"]))
-    +cd("Ocupacional",ul(["35 cm a 1,3 m: ler e usar dispositivos","35 cm a 2 m: escritório, computador, dentistas, cozinheiros","35 cm a 4 m: quem trabalha em casa e não quer tirar o óculos ao se mover","Combo: 1 multifocal + 1 ocupacional"]))+"</div>"
-    +'<div style="margin-top:16px">'+cd("Faixas e valores (avulsa / inclusa)",tb(["Material","Faixa de grau","Top","Premium","Ocupacional"],MFR.slice().reverse().map(function(r){function v(q){return brl(q[0])+" / "+brl(q[1])}return [r.nome,fx(r)+" · Adição 0,75 a 3,50",v(r.p.mf),v(r.p.mp),v(r.p.oc)]}))+'<p class="muted">Todas com tecnologia free form. Recursos comuns: flutuação reduzida, armações curtas (a partir de 16 mm), visão balanceada e backside.</p>')+"</div>";
+    h='<div class="cg">'+cd("Zerezes Top",ul(["Flutuação reduzida","Campo de visão amplo","Visão balanceada, com transições suaves entre as distâncias","Corredores de 14, 16 ou 18 mm","Altura mínima de montagem: 16 mm (armações curtas)"]))
+    +cd("Zerezes Premium (PRO)",ul(["Maior campo de perto, mesmo com adição alta","Adaptação imediata","<b>Medidas ID:</b> usa ângulo pantoscópico, ângulo da armação e distância vértice","<b>Light Path 2:</b> ajusta o caminho da luz em todas as distâncias","<b>Visão Binocular Dinâmica:</b> combina os dois olhos para foco mais rápido e mais conforto","<b>Corredores Adaptativos:</b> corredor de 14 a 18 mm ajustado ao rosto de cada cliente","Altura mínima de montagem: 16 mm (armações curtas)"]))
+    +cd("Ocupacional",ul(["35 cm a 1,3 m: ler e usar dispositivos","35 cm a 2 m: escritório, computador, dentistas, cozinheiros","35 cm a 4 m: quem trabalha em casa e não quer tirar o óculos ao se mover","<b>Foco Inteligente:</b> melhora a transição entre intermediário e perto ao usar telas","Altura mínima de montagem: 20 mm","Combo: 1 multifocal + 1 ocupacional"]))+"</div>"
+    +'<div style="margin-top:16px">'+cd("Faixas e valores (avulsa / inclusa)",tb(["Material","Faixa de grau","Top","Premium","Ocupacional"],MFR.slice().reverse().map(function(r){function v(q){return brl(q[0])+" / "+brl(q[1])}return [r.nome,fx(r)+" · Adição 0,75 a 3,50",v(r.p.mf),v(r.p.mp),v(r.p.oc)]}))+'<p class="muted">Todas com tecnologia free form. Recursos comuns: flutuação reduzida, armações curtas (altura mínima 16 mm; 20 mm na ocupacional), visão balanceada e backside. Na 1.67, a partir de -8,75 esférico o cilíndrico vai até -4,00.</p>')+"</div>";
   }else{
     h='<div class="cg">'+cd("Proteção UV",'<p>Bloqueia a radiação ultravioleta e protege os olhos em qualquer lente.</p>')
     +cd("Antirreflexo residual verde",'<p>Reduz reflexos na superfície da lente: olhar mais limpo e visão mais confortável.</p>')
@@ -887,6 +912,122 @@ $("tv").addEventListener("click",function(e){
   else if(a&&TVT==="pe"&&a.closest("#pe_s")){PE.i=+a.dataset.i;renderV()}
 });
 document.querySelectorAll("#seg-tv .btn").forEach(function(b){b.addEventListener("click",function(){TVT=b.dataset.v;document.querySelectorAll("#seg-tv .btn").forEach(function(x){x.classList.toggle("on",x===b)});renderV()})});
+
+/* ===== Visagismo ===== */
+var FSH={ov:"Oval",re:"Redondo",qu:"Quadrado",rt:"Retangular",tr:"Triangular",co:"Coração",di:"Diamante"};
+var FORD=["ov","re","qu","rt","tr","co","di"];
+var FREC={
+ov:{ok:["q","s","a","g","r"],no:[],t:"Proporções equilibradas: quase todos os formatos funcionam. Evite apenas armações grandes demais, que escondem o rosto."},
+re:{ok:["q","s","h"],no:["r"],t:"Linhas retas e angulares alongam o rosto e dão definição. Armações redondas reforçam a curva."},
+qu:{ok:["r","o"],no:["s","q"],t:"Formas arredondadas suavizam o maxilar marcado. Cantos retos acentuam a angulosidade."},
+rt:{ok:["r","a","o"],no:["q"],t:"Armações mais altas e com ponte baixa quebram o comprimento do rosto. Evite as muito estreitas."},
+tr:{ok:["g","a"],no:["s"],t:"Destaque na parte de cima da armação equilibra a mandíbula mais larga. Evite peso na parte inferior."},
+co:{ok:["o","r","a"],no:["g"],t:"Formatos mais largos embaixo equilibram a testa ampla. Evite excesso de detalhe e peso no topo."},
+di:{ok:["g","o"],no:["q"],t:"Linhas suaves e brow-line marcada destacam os olhos e suavizam as maçãs do rosto."}
+};
+var VG={cv:null,img:null,M:null,P:[],man:false,sh:"",mm:0,busy:""};
+var VGSTEP=["Toque no topo da testa (início do cabelo)","Toque na ponta do queixo","Toque na lateral esquerda da testa","Toque na lateral direita da testa","Toque na maçã do rosto esquerda","Toque na maçã do rosto direita","Toque no ângulo da mandíbula esquerdo","Toque no ângulo da mandíbula direito"];
+function vgDist(a,b){return Math.hypot(a[0]-b[0],a[1]-b[1])}
+function vgMeasures(P){return {L:vgDist(P[0],P[1]),F:vgDist(P[2],P[3]),C:vgDist(P[4],P[5]),J:vgDist(P[6],P[7])}}
+function vgClass(M){
+  var r=M.L/M.C,f=M.F/M.C,j=M.J/M.C;
+  if(f<0.82&&j<0.8&&r>1.2)return "di";
+  if(f/j>1.12)return "co";
+  if(j/f>1.1)return "tr";
+  if(r<1.3)return j>0.82?"qu":"re";
+  if(r>=1.45)return j>0.8?"rt":"ov";
+  return "ov";
+}
+window.ZV_vgClass=vgClass;
+function vgStart(){
+  $("vg").innerHTML='<button type="button" class="vgadd" id="vgadd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="12" rx="6.5" ry="8.5"/><path d="M9 14c1 2 5 2 6 0M9.5 10h.01M14.5 10h.01"/></svg><b>Adicionar foto do cliente</b></button><p class="vgnote">Rosto de frente, cabelo fora da testa e sem inclinar a cabeça. A foto fica só neste aparelho.</p>';
+  $("vgadd").onclick=function(){$("vgsheet").hidden=false};
+}
+function renderVG(){if(VG.img)vgShow();else vgStart()}
+function vgFile(f){
+  if(!f)return;
+  $("vg").innerHTML='<div class="vgmsg">Carregando foto…</div>';
+  var done=function(src,w,h){
+    var m=1000/Math.max(w,h);if(m>1)m=1;
+    var c=document.createElement("canvas");c.width=Math.round(w*m);c.height=Math.round(h*m);
+    c.getContext("2d").drawImage(src,0,0,c.width,c.height);
+    VG.cv=c;VG.img=true;VG.P=[];VG.M=null;VG.sh="";VG.mm=0;vgAuto();
+  };
+  if(window.createImageBitmap){
+    createImageBitmap(f,{imageOrientation:"from-image"}).then(function(b){done(b,b.width,b.height)}).catch(function(){vgImgFallback(f,done)});
+  }else vgImgFallback(f,done);
+}
+function vgImgFallback(f,done){var u=URL.createObjectURL(f),im=new Image();im.onload=function(){done(im,im.naturalWidth,im.naturalHeight);URL.revokeObjectURL(u)};im.onerror=function(){$("vg").innerHTML='<div class="vgmsg">Não consegui abrir esta imagem. Tente outra foto.</div>';VG.img=null};im.src=u}
+["vgf1","vgf2"].forEach(function(id){$(id).addEventListener("change",function(e){var f=e.target.files&&e.target.files[0];e.target.value="";vgFile(f)})});
+$("vgcam").onclick=function(){$("vgsheet").hidden=true;$("vgf1").click()};
+$("vggal").onclick=function(){$("vgsheet").hidden=true;$("vgf2").click()};
+$("vgcan").onclick=function(){$("vgsheet").hidden=true};
+$("vgsheet").addEventListener("click",function(e){if(e.target===$("vgsheet"))$("vgsheet").hidden=true});
+var VGLM=null;
+function vgModel(){
+  if(VGLM)return VGLM;
+  var t=new Promise(function(_,rej){setTimeout(function(){rej(new Error("timeout"))},20000)});
+  VGLM=Promise.race([import("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs").then(function(m){
+    return m.FilesetResolver.forVisionTasks("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm").then(function(fs){
+      return m.FaceLandmarker.createFromOptions(fs,{baseOptions:{modelAssetPath:"https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task"},runningMode:"IMAGE",numFaces:1});
+    });
+  }),t]).catch(function(e){VGLM=null;throw e});
+  return VGLM;
+}
+function vgAuto(){
+  $("vg").innerHTML='<div class="vgmsg">Analisando o rosto…</div>';
+  vgModel().then(function(lm){
+    var r=lm.detect(VG.cv);
+    if(!r||!r.faceLandmarks||!r.faceLandmarks.length)throw new Error("noface");
+    var L=r.faceLandmarks[0],W=VG.cv.width,H=VG.cv.height;
+    function q(i){return [L[i].x*W,L[i].y*H]}
+    var top=q(10),ch=q(152),dy=top[1]-ch[1];
+    top=[top[0]+(top[0]-ch[0])*0.12,top[1]+(top[1]-ch[1])*0.12];
+    VG.P=[top,ch,q(54),q(284),q(234),q(454),q(172),q(397)];
+    VG.man=false;
+    var iris=(L.length>476)?(vgDist(q(469),q(471))+vgDist(q(474),q(476)))/2:0;
+    VG.mm=iris>0?vgDist(VG.P[4],VG.P[5])/iris*11.7:0;
+    VG.M=vgMeasures(VG.P);VG.sh=vgClass(VG.M);vgShow();
+  }).catch(function(e){
+    VG.man=true;VG.P=[];VG.sh="";VG.M=null;vgShow(e&&e.message==="noface"?"Não encontrei um rosto na foto. Marque os pontos manualmente.":"Marque os pontos do rosto manualmente.");
+  });
+}
+function vgDraw(){
+  var c=$("vgc");if(!c)return;var x=c.getContext("2d");
+  x.drawImage(VG.cv,0,0);
+  var P=VG.P,k=VG.cv.width/600;
+  function ln(a,b){if(!P[a]||!P[b])return;x.beginPath();x.moveTo(P[a][0],P[a][1]);x.lineTo(P[b][0],P[b][1]);x.stroke()}
+  x.strokeStyle="rgba(127,211,234,.9)";x.lineWidth=2*k;x.setLineDash([6*k,5*k]);
+  ln(0,1);ln(2,3);ln(4,5);ln(6,7);x.setLineDash([]);
+  x.fillStyle="#7FD3EA";
+  P.forEach(function(p){x.beginPath();x.arc(p[0],p[1],4.5*k,0,7);x.fill()});
+}
+function vgShow(msg){
+  var h='<div class="vgcv"><canvas id="vgc" width="'+VG.cv.width+'" height="'+VG.cv.height+'"></canvas></div>';
+  if(VG.man&&VG.P.length<8){
+    h+='<div class="vgmsg" id="vgm">'+(msg?msg+"<br>":"")+(VG.P.length+1)+" de 8 · "+VGSTEP[VG.P.length]+'</div><div class="vgrow">'+(VG.P.length?'<button type="button" class="btn" id="vgun">Desfazer</button>':"")+'<button type="button" class="btn" id="vgnew">Nova foto</button></div>';
+  }else{
+    var sh=VG.sh,R=FREC[sh];
+    var chips=FORD.map(function(k){return '<button type="button" class="vgchip'+(k===sh?" on":"")+'" data-f="'+k+'">'+FSH[k]+"</button>"}).join("");
+    var fr=function(a,c){return a.length?'<div class="vgfr '+c+'">'+a.map(function(k){return '<div class="fi">'+shIcon(k)+"<span>"+SHN[k]+"</span></div>"}).join("")+"</div>":""};
+    h+='<div class="card vgres"><h2>Rosto '+FSH[sh].toLowerCase()+'</h2><p class="sub">'+R.t+'</p><p class="vgl">Indicadas</p>'+fr(R.ok,"ok")+(R.no.length?'<p class="vgl">Evitar</p>'+fr(R.no,"no"):"")
+    +'<p class="vgl" style="margin-bottom:8px">Ajustar formato</p><div class="vgrow">'+chips+'</div>'
+    +(VG.mm?'<p class="vgl" style="margin-top:14px">Largura do rosto estimada: cerca de '+Math.round(VG.mm)+' mm. Valor aproximado, não substitui a medida com régua.</p>':"")+'</div>'
+    +'<div class="vgrow"><button type="button" class="btn" id="vgman">Marcar pontos manualmente</button><button type="button" class="btn" id="vgnew">Nova foto</button></div>';
+  }
+  $("vg").innerHTML=h;vgDraw();
+  var c=$("vgc");
+  if(VG.man&&VG.P.length<8)c.onclick=function(e){
+    var b=c.getBoundingClientRect();
+    VG.P.push([(e.clientX-b.left)*c.width/b.width,(e.clientY-b.top)*c.height/b.height]);
+    if(VG.P.length===8){VG.M=vgMeasures(VG.P);VG.sh=vgClass(VG.M);VG.mm=0}
+    vgShow();
+  };
+  var u=$("vgun");if(u)u.onclick=function(){VG.P.pop();vgShow()};
+  $("vgnew").onclick=function(){VG.img=null;VG.cv=null;vgStart()};
+  var m=$("vgman");if(m)m.onclick=function(){VG.man=true;VG.P=[];VG.sh="";vgShow("Marque os pontos manualmente.")};
+  document.querySelectorAll(".vgchip").forEach(function(b){b.onclick=function(){VG.sh=b.dataset.f;vgShow()}});
+}
 var HOME=[
 ["espessura","Espessura",'<path d="M3 8h18M3 16h18M7 8c1.4 2.6 1.4 5.4 0 8M17 8c-1.4 2.6-1.4 5.4 0 8"/>'],
 ["progressivas","Progressivas",'<ellipse cx="12" cy="12" rx="7" ry="9"/><path d="M9 7h6M10.5 12h3M9.5 17h5"/>'],
@@ -895,7 +1036,7 @@ var HOME=[
 ["tabela","Tabela dinâmica",'<rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 10h18M3 14.5h18M9 5v14"/>'],
 ["anatomia","Anatomia e ametropias",'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>'],
 ["visao","Teste de visão",'<path d="M5 6h14M7 10h10M9 14h6M10.5 18h3"/>'],
-[0,"Visagismo",'<ellipse cx="12" cy="12" rx="7" ry="9"/><path d="M9 14c1 2 5 2 6 0M9.5 10h.01M14.5 10h.01"/>'],
+["visagismo","Visagismo",'<ellipse cx="12" cy="12" rx="7" ry="9"/><path d="M9 14c1 2 5 2 6 0M9.5 10h.01M14.5 10h.01"/>'],
 [0,"Medidas",'<rect x="3" y="8" width="18" height="8" rx="1"/><path d="M7 8v3M11 8v4M15 8v3M19 8v4"/>'],
 [0,"Atendimentos",'<rect x="6" y="4" width="12" height="16" rx="1.5"/><path d="M9 9h6M9 13h6M9 17h3"/>']
 ];
@@ -906,6 +1047,5 @@ $("rail").innerHTML=HOME.map(function(h){
 window.addEventListener("hashchange",route);route();
 render();
 </script>
-<script>if("serviceWorker" in navigator&&/^https?:/.test(location.protocol)&&!window.Capacitor){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}</script>
-</body>
+<script>if("serviceWorker" in navigator&&/^https?:/.test(location.protocol)&&!window.Capacitor){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}</script></body>
 </html>
