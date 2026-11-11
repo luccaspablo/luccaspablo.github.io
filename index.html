@@ -297,6 +297,20 @@ nav.top{-webkit-backdrop-filter:blur(26px) saturate(180%);backdrop-filter:blur(2
 .vgl{font-size:.8rem;color:var(--muted);text-align:center;margin:0}
 .vgchip{padding:6px 12px;border-radius:999px;border:0;background:rgba(255,255,255,.07);color:var(--ink);font:inherit;font-size:.85rem;cursor:pointer}
 .vgchip.on{background:var(--ink);color:var(--bg)}
+.vgside{display:flex;flex-direction:column;gap:14px;min-width:0}
+.vgwrap{display:flex;flex-direction:column;gap:14px}
+@media (min-width:720px) and (orientation:landscape){
+#vg{max-width:1000px}
+.vgwrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:center}
+.vgcv canvas{max-height:calc(100vh - 150px);object-fit:contain}
+.vgside{justify-content:center}
+.vgres h2{font-size:1.25rem}
+.vgfr{margin:4px 0 8px}
+.vgfr .fi{width:78px;padding:8px 4px}
+.vgfr .fi svg{width:46px;height:30px}
+.vgside .vgres{padding:14px}
+.vgside .vgres .sub{margin-bottom:8px;font-size:.9rem}
+}
 .vgsheet{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.4);padding:12px calc(12px + env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) calc(12px + env(safe-area-inset-left,0px))}
 .vgsheet[hidden]{display:none}
 .vgsheet .sb{width:100%;max-width:420px;display:flex;flex-direction:column;gap:8px}
@@ -1003,7 +1017,7 @@ function vgDraw(){
   P.forEach(function(p){x.beginPath();x.arc(p[0],p[1],4.5*k,0,7);x.fill()});
 }
 function vgShow(msg){
-  var h='<div class="vgcv"><canvas id="vgc" width="'+VG.cv.width+'" height="'+VG.cv.height+'"></canvas></div>';
+  var cvh='<div class="vgcv"><canvas id="vgc" width="'+VG.cv.width+'" height="'+VG.cv.height+'"></canvas></div>',h="";
   if(VG.man&&VG.P.length<8){
     h+='<div class="vgmsg" id="vgm">'+(msg?msg+"<br>":"")+(VG.P.length+1)+" de 8 · "+VGSTEP[VG.P.length]+'</div><div class="vgrow">'+(VG.P.length?'<button type="button" class="btn" id="vgun">Desfazer</button>':"")+'<button type="button" class="btn" id="vgnew">Nova foto</button></div>';
   }else{
@@ -1015,7 +1029,7 @@ function vgShow(msg){
     +(VG.mm?'<p class="vgl" style="margin-top:14px">Largura do rosto estimada: cerca de '+Math.round(VG.mm)+' mm. Valor aproximado, não substitui a medida com régua.</p>':"")+'</div>'
     +'<div class="vgrow"><button type="button" class="btn" id="vgman">Marcar pontos manualmente</button><button type="button" class="btn" id="vgnew">Nova foto</button></div>';
   }
-  $("vg").innerHTML=h;vgDraw();
+  $("vg").innerHTML='<div class="vgwrap">'+cvh+'<div class="vgside">'+h+'</div></div>';vgDraw();
   var c=$("vgc");
   if(VG.man&&VG.P.length<8)c.onclick=function(e){
     var b=c.getBoundingClientRect();
