@@ -241,8 +241,8 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border:0;border-radiu
 .gl{position:absolute;inset:0;border-radius:50%;transform-style:preserve-3d;pointer-events:none}
 .glc{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.1),rgba(255,255,255,0) 62%)}
 .gS,.gC{position:absolute;inset:0}
-.gS{background:radial-gradient(ellipse at 74% 26%,rgba(255,255,255,.65),transparent 20%),linear-gradient(112deg,transparent 18%,rgba(255,255,255,.4) 30%,rgba(255,255,255,.06) 37%,rgba(255,255,255,.3) 44%,transparent 58%),rgba(255,255,255,.035)}
-.gS i{position:absolute;background:rgba(255,255,255,.55);filter:blur(.6px);transform:rotate(-12deg);width:17%;height:14%}
+.gS{background:radial-gradient(ellipse at 74% 26%,rgba(255,255,255,.95),transparent 26%),radial-gradient(ellipse at 28% 78%,rgba(255,255,255,.45),transparent 40%),linear-gradient(112deg,transparent 12%,rgba(255,255,255,.62) 28%,rgba(255,255,255,.12) 37%,rgba(255,255,255,.5) 46%,transparent 62%),rgba(255,255,255,.14)}
+.gS i{position:absolute;background:rgba(255,255,255,.8);filter:blur(.6px);transform:rotate(-12deg);width:17%;height:14%}
 .gS .p1{left:14%;top:16%}.gS .p2{left:33%;top:16%}.gS .p3{left:14%;top:32%}.gS .p4{left:33%;top:32%}
 .gD{position:absolute;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:rgba(255,255,255,.95);box-shadow:0 0 8px rgba(255,255,255,.8)}
 .gl-l{position:absolute;bottom:13%;font-size:11px;font-weight:700;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.65)}
@@ -279,6 +279,11 @@ nav.top{-webkit-backdrop-filter:blur(26px) saturate(180%);backdrop-filter:blur(2
 .tag{background:rgba(127,211,234,.18)}
 </style>
 <style>
+nav.top{background:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important;border:0!important;pointer-events:none}
+nav.top>*{pointer-events:auto}
+nav.top:has(#back[hidden]):has(#swl[hidden]){display:none}
+nav.top #back{display:inline-block;padding:6px 14px;border-radius:999px;background:rgba(40,52,64,.55);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.1)}
+nav.top #back[hidden]{display:none}
 #vg{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
 .vgadd{display:flex;flex-direction:column;align-items:center;gap:14px;padding:44px 20px;border:1px solid rgba(255,255,255,.12);border-radius:22px;background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);color:var(--ink);font:inherit;cursor:pointer;width:100%}
 .vgadd svg{width:64px;height:64px;color:var(--accent)}
@@ -420,9 +425,10 @@ var AS={"hero": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYF
 var TECH={cMin:1.5,eMin:1.0}; /* VALORES MÉDIOS PROVISÓRIOS: substituir pelos dados do laboratório */
 var M3=true,RX3=-0.5,RY3=-0.75,G3={},D3=null,WH={};
 var IDX=[[1.56,"1,56 · Resina"],[1.59,"1,59 · Policarbonato"],[1.67,"1,67 · Resina"]];
-var SH={r:[1,2],o:[0.688,2],q:[0.68,3.5],g:[0.78,2.4],a:[0.9,2.2],h:[0.76,2],s:[0.86,3]};
+var SH={r:[1,2],o:[0.688,2],q:[0.68,3.5],g:[0.78,2.4],a:[0.86,2.2],h:[0.76,2],s:[0.86,3]};
 var CAT=[0.9796, 0.9837, 0.9802, 0.9678, 0.9464, 0.9177, 0.8853, 0.8521, 0.8191, 0.7883, 0.7605, 0.7342, 0.7103, 0.6897, 0.671, 0.6535, 0.638, 0.6238, 0.6112, 0.601, 0.5919, 0.5833, 0.5761, 0.5705, 0.5665, 0.5643, 0.5635, 0.563, 0.5638, 0.567, 0.5713, 0.5761, 0.5825, 0.5906, 0.5999, 0.6115, 0.6249, 0.6401, 0.6578, 0.6774, 0.6996, 0.7245, 0.7524, 0.784, 0.8191, 0.8588, 0.9033, 0.9534, 1.011, 1.0723, 1.1195, 1.1294, 1.1013, 1.0565, 1.0115, 0.9697, 0.9311, 0.8966, 0.8658, 0.8374, 0.8119, 0.7894, 0.769, 0.7511, 0.7353, 0.7213, 0.7098, 0.7002, 0.6919, 0.6846, 0.6785, 0.6739, 0.6707, 0.6688, 0.6675, 0.6661, 0.6659, 0.6669, 0.6685, 0.6702, 0.672, 0.6747, 0.6785, 0.6825, 0.6862, 0.6905, 0.6953, 0.6996, 0.7031, 0.7063, 0.7095, 0.7128, 0.7165, 0.7211, 0.7259, 0.7307, 0.7361, 0.7425, 0.7492, 0.7559, 0.7634, 0.7717, 0.7797, 0.7878, 0.7969, 0.806, 0.8143, 0.8229, 0.832, 0.8408, 0.8502, 0.8604, 0.8706, 0.8808, 0.892, 0.9051, 0.9191, 0.9346, 0.9523, 0.9686];
-function catr(th){var N=CAT.length,u=((th%(2*Math.PI))+2*Math.PI)%(2*Math.PI)/(2*Math.PI)*N,i=Math.floor(u)%N,f=u-Math.floor(u);return CAT[i]*(1-f)+CAT[(i+1)%N]*f}
+var AVT=[0.899,0.9212,0.9474,0.9737,0.9972,1.0249,1.0498,1.0719,1.0899,1.1051,1.1176,1.1203,1.1176,1.1065,1.0913,1.0705,1.0484,1.0249,1.0014,0.9793,0.9571,0.9405,0.9225,0.9059,0.8949,0.8838,0.8728,0.8672,0.8617,0.8548,0.8534,0.852,0.8534,0.8534,0.8562,0.8617,0.8686,0.8769,0.8838,0.8935,0.9059,0.9156,0.9295,0.9447,0.9599,0.9737,0.9876,1.0,1.0111,1.018,1.0221,1.0235,1.0263,1.0249,1.0207,1.0194,1.0152,1.0097,1.0055,1.0014,0.9972,0.9931,0.9889,0.9876,0.9889,0.9876,0.9876,0.9889,0.9889,0.9903,0.9889,0.9889,0.9834,0.9834,0.9793,0.9779,0.971,0.9668,0.9599,0.953,0.9447,0.9336,0.9225,0.9115,0.8976,0.8866,0.8728,0.8589,0.8479,0.8326,0.8216,0.8077,0.7953,0.7828,0.7718,0.7607,0.7524,0.7427,0.7386,0.7317,0.7275,0.7248,0.7206,0.7206,0.722,0.7234,0.7234,0.7289,0.7317,0.7386,0.7469,0.7552,0.7649,0.7759,0.787,0.8036,0.8188,0.8368,0.8562,0.8769];
+function catr(th,T){T=T||CAT;var N=T.length,u=((th%(2*Math.PI))+2*Math.PI)%(2*Math.PI)/(2*Math.PI)*N,i=Math.floor(u)%N,f=u-Math.floor(u);return T[i]*(1-f)+T[(i+1)%N]*f}
 function oct(th,a,b){
   var cw=0.36*a,ch=0.42*b,V=[[a,b-ch],[a-cw,b],[-(a-cw),b],[-a,b-ch],[-a,-(b-ch)],[-(a-cw),-b],[a-cw,-b],[a,-(b-ch)]],c=Math.cos(th),s=Math.sin(th),best=1e9,i;
   for(i=0;i<8;i++){
@@ -435,6 +441,7 @@ function oct(th,a,b){
 }
 function R0(th,a,b,sh){
   if(sh=="g")return a*catr(th);
+  if(sh=="a")return a*catr(th,AVT);
   var e=SH[sh][1],c=Math.cos(th),s=Math.sin(th);
   var r=Math.pow(1/(Math.pow(Math.abs(c/a),e)+Math.pow(Math.abs(s/b),e)),1/e);
   if(sh=="g")r*=1+0.3*Math.exp(-Math.pow(th-2.5,2)/0.3);
@@ -689,12 +696,13 @@ var LYD={lip:{n:"Liporrepelente",r:[255,255,255],d:"Repele gordura e poeira: a l
 hid:{n:"Hidrofóbica",r:[110,190,255],d:"Faz a água escorrer em gotas, sem deixar a lente molhada ou manchada.",w:"Exclusiva da 1,67"},
 ar:{n:"Antirreflexo",r:[120,225,160],d:"Reduz os reflexos e deixa o olhar mais limpo e a visão mais confortável.",w:"Em todas as lentes"},
 az:{n:"Filtro de luz azul",r:[80,120,255],d:"Reduz o cansaço visual de quem passa muitas horas em telas e sob iluminação LED.",w:"Opcional"},
+imp:{n:"Antiimpacto",r:[240,120,140],d:"Material poli (policarbonato): absorve melhor os impactos e é bem mais resistente que a 1,56. Indicada para o uso intenso e para quem quer mais segurança.",w:"Exclusiva da 1,59"},
 ri:{n:"Antirrisco",r:[255,205,110],d:"Camada resistente que protege a lente dos riscos do dia a dia.",w:"De fábrica na 1,67 · nas demais, com o filtro azul"}};
 var LBS={1.56:["Resina 1,56","Boa nitidez e ótimo custo-benefício. É a mais espessa das três."],1.59:["Poli 1,59","A mais resistente a impacto. Espessura intermediária."],1.67:["Resina 1,67","A mais fina e leve do portfólio."]};
 var LN=1.67,OP=false,SEL="",DET=true,SPL=50,FACE=new DOMMatrix().rotate(-8,0,0),MAT=new DOMMatrix().rotate(-8,0,0),MATF=new DOMMatrix().rotate(0,0,22).rotate(-42,0,0),BN={1.56:12,1.59:9,1.67:6},ARC="Verde",ARCOL={Verde:{r:[120,225,160],t:"rgba(120,225,160,"},Azul:{r:[100,160,255],t:"rgba(100,160,255,"}},TOUR=null,DR=null;
 function mstr(m,z){var t=m.translate(0,0,z);return "matrix3d("+[t.m11,t.m12,t.m13,t.m14,t.m21,t.m22,t.m23,t.m24,t.m31,t.m32,t.m33,t.m34,t.m41,t.m42,t.m43,t.m44].join(",")+")"}
 function rgba(r,a){return "rgba("+r[0]+","+r[1]+","+r[2]+","+a+")"}
-function lyList(){var a=[],az=$("az").checked;if(LN===1.67)a.push("lip","hid");if(ARC!=="Sem")a.push("ar");if(az)a.push("az");if(az||LN===1.67)a.push("ri");a.push("base");return a}
+function lyList(){var a=[],az=$("az").checked;if(LN===1.67)a.push("lip","hid");if(ARC!=="Sem")a.push("ar");if(az)a.push("az");if(az||LN===1.67)a.push("ri");if(LN===1.59)a.push("imp");a.push("base");return a}
 function lyInfo(k){if(k==="base")return {n:LBS[LN][0],d:LBS[LN][1],w:"Proteção UV incluída"};if(k==="ar")return {n:LYD.ar.n,d:LYD.ar.d,w:"Reflexo residual "+(ARC==="Azul"?"azul":"verde")};return LYD[k]}
 var CPS=(function(){var h="",k,v;for(k=1;k<=8;k++){v=1-k/9;h+='<i class="cp" style="--s:'+v.toFixed(3)+';--dz:'+(6*(1-v*v)).toFixed(2)+'px"></i>'}return h})();
 function buildL(){
@@ -722,7 +730,7 @@ function setSplit(){
   var gS=$("gS"),gC=$("gC"),gD=$("gD");if(!gS)return;
   var none=ARC==="Sem",x=none?100:SPL,c=ARCOL[none?"Verde":ARC];
   gS.style.clipPath="inset(0 "+(100-x)+"% 0 0)";gC.style.clipPath="inset(0 0 0 "+x+"%)";
-  gC.style.background="radial-gradient(circle at 72% 28%,"+c.t+".5),transparent 36%),linear-gradient(135deg,"+c.t+".16),transparent 60%)";
+  gC.style.background="radial-gradient(circle at 72% 28%,"+c.t+".85),transparent 42%),linear-gradient(135deg,"+c.t+".34),transparent 70%)";
   gD.style.left=x+"%";gD.style.display=(none||x<=0||x>=100)?"none":"block";
   $("gl3").classList.toggle("nos",none);
 }
